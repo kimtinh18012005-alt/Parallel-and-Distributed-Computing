@@ -37,11 +37,13 @@ Thay `TV1`…`TV6` bằng họ tên và MSSV sau khi nhóm duyệt phân công.
 ├── README.md
 └── docs/
     ├── SUON_BAO_CAO_CHUONG_4.md
-    └── PHAN_CONG_6_THANH_VIEN.md
+    ├── PHAN_CONG_6_THANH_VIEN.md
+    └── PHAN_CONG_CHI_TIET_6_THANH_VIEN.md
 ```
 
 - [`SUON_BAO_CAO_CHUONG_4.md`](docs/SUON_BAO_CAO_CHUONG_4.md): sườn chi tiết 42 slide, nền tảng cần nghiên cứu, đặc tả demo và cấu trúc dự án dự kiến.
 - [`PHAN_CONG_6_THANH_VIEN.md`](docs/PHAN_CONG_6_THANH_VIEN.md): nhiệm vụ, thời lượng, đầu ra và cách phối hợp của từng người.
+- [`PHAN_CONG_CHI_TIET_6_THANH_VIEN.md`](docs/PHAN_CONG_CHI_TIET_6_THANH_VIEN.md): nhiệm vụ dài và cụ thể cho từng thành viên, gồm nội dung từng slide, phần phải nghiên cứu, sản phẩm phải nộp, câu hỏi phản biện, tiêu chí hoàn thành, review chéo và lịch thực hiện.
 
 ## Demo dự kiến
 

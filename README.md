@@ -4,7 +4,6 @@
 
 Repository lập kế hoạch cho nhóm **6 thành viên**, học phần **Tính toán song song và phân tán**.
 
-> Trạng thái hiện tại: **Đang duyệt sườn**. Chưa sản xuất PowerPoint/PDF chính thức và chưa triển khai demo.
 
 ## Mục tiêu
 
@@ -28,7 +27,7 @@ Bài báo cáo phải giúp người nghe:
 | TV5 | 29–35 | Timeout, cancellation, Semaphore, Queue và lỗi thường gặp |
 | TV6 | 36–42 | Đặc tả demo, cách đánh giá, kết luận và tài liệu tham khảo |
 
-Thay `TV1`…`TV6` bằng họ tên và MSSV sau khi nhóm duyệt phân công.
+
 
 ## Tài liệu trong repository
 
@@ -58,9 +57,7 @@ Thay `TV1`…`TV6` bằng họ tên và MSSV sau khi nhóm duyệt phân công.
 Demo phải chạy ngoại tuyến để không phụ thuộc Wi-Fi khi báo cáo.
 
 ## Các mốc thực hiện
-
-- [ ] Điền họ tên và MSSV của 6 thành viên.
-- [ ] Duyệt sườn 42 slide và thời lượng báo cáo.
+- [ ] Duyệt sườn tính cỡ bao nhiêu slide và thời lượng báo cáo.
 - [ ] Chốt bài toán demo.
 - [ ] Chia nguồn nghiên cứu và deadline.
 - [ ] Viết nội dung chi tiết từng phần.
@@ -70,13 +67,11 @@ Demo phải chạy ngoại tuyến để không phụ thuộc Wi-Fi khi báo cá
 - [ ] Tập dượt và chuẩn bị câu hỏi phản biện.
 
 ## Quy trình GitHub
-
 1. Mỗi thành viên nhận một Issue tương ứng với phần được giao.
 2. Làm việc trên nhánh riêng, ví dụ `tv3/concurrent-futures`.
 3. Commit nhỏ, nêu rõ nội dung: `docs: bổ sung vòng đời Future`.
 4. Mở Pull Request và nhờ ít nhất một thành viên khác review.
 5. Không đưa trực tiếp thay đổi chưa duyệt vào nhánh `main`.
-
 ## Nguồn nghiên cứu chính
 
 - Tài liệu Chương 4 do giảng viên cung cấp — chỉ dùng nội bộ, không upload lên repository công khai.

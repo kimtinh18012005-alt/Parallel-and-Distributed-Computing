@@ -1,39 +1,6 @@
 # Parallel and Distributed Computing
 
 ## Chương 4 — Phương pháp tính toán bất đồng bộ trong Python
-
-> **Trạng thái hiện tại:** đang ở giai đoạn kiểm định phạm vi, xây sườn và chia việc. Repository **chưa tạo PPTX/PDF và chưa cài đặt demo**. Nhóm chỉ làm các bước đó sau khi duyệt sườn, thời lượng và phiên bản Python.
-
-Repository này là kế hoạch học–báo cáo Chương 4 cho nhóm **6 thành viên**. Mục tiêu không phải chia sáu đoạn để mỗi người học thuộc phần mình, mà xây một hệ thống trong đó:
-
-- mỗi người là chuyên gia chính của một cụm kiến thức;
-- mỗi cụm có một người backup có thể trình bày thay;
-- cả sáu người đều phải vượt chuẩn kiến thức chung, quiz, bảo vệ miệng và lab;
-- nội dung gốc của giảng viên được bao phủ đầy đủ;
-- các khoảng trống thực hành được bổ sung bằng tài liệu Python chính thức;
-- demo nhỏ nối lý thuyết với một bài toán có I/O, CPU, lỗi, timeout và quá tải.
-
-## Trả lời thẳng: nội dung cũ đã đủ Chương 4 chưa?
-
-**Đúng chủ đề nhưng chưa đủ A–Z.**
-
-Sườn cũ đã chạm đủ các cụm chính trong PDF 24 trang: tuần tự/đồng thời/song song/bất đồng bộ, `concurrent.futures`, Executor/Future, worker pool, event loop, coroutine, Task và `asyncio`. Vì vậy nó **không lệch Chương 4**.
-
-Tuy nhiên, phần lớn mới ở mức tiêu đề hoặc giới thiệu. Để cả nhóm thật sự nắm phương pháp tính toán bất đồng bộ và bảo vệ được câu hỏi sâu, phải bổ sung:
-
-- semantics chính xác của coroutine, Task và hai loại Future;
-- `gather`, `wait`, `as_completed`, `TaskGroup`, `ExceptionGroup` và thứ tự/lỗi/hủy;
-- timeout, cancellation, `shield`, cleanup và graceful shutdown;
-- race condition, Lock, Event, Condition, Semaphore, BoundedSemaphore, Barrier;
-- Queue, producer–consumer, backpressure và giới hạn tải;
-- cầu nối giữa async với code blocking, thread và process;
-- pickling, main guard, khác biệt hệ điều hành và GIL;
-- async iterator/generator/context manager, streams và subprocess ở tầng phù hợp;
-- test, debug, logging, task introspection và benchmark công bằng;
-- các lưu ý phiên bản Python thay vì phát biểu API như thể không bao giờ thay đổi.
-
-Bằng chứng đối chiếu từng trang và mức `Covered/Partial/Missing` nằm trong [báo cáo kiểm định](docs/00_DANH_GIA_DO_BAO_PHU_CHUONG_4.md).
-
 ## Phân công chính thức mới
 
 | Thành viên | Chuyên môn chính | Người backup | Trách nhiệm xuyên suốt |
@@ -72,12 +39,6 @@ Số cuối cùng phải được chốt theo thời lượng thực tế. Tài 
 3. [`02_PHAN_CONG_6_THANH_VIEN_A_Z.md`](docs/02_PHAN_CONG_6_THANH_VIEN_A_Z.md) — nhiệm vụ cực chi tiết cho từng người, cấu hình slide mô-đun, đầu ra, câu hỏi, review và Definition of Done.
 4. [`03_CHUONG_TRINH_HOC_CHUNG_VA_KIEM_TRA_CHEO.md`](docs/03_CHUONG_TRINH_HOC_CHUNG_VA_KIEM_TRA_CHEO.md) — 40 năng lực chung, lộ trình 8 buổi, lab, quiz 60 câu, bảo vệ miệng và quality gates.
 5. [`04_DAC_TA_DEMO_THUC_TE_NHO.md`](docs/04_DAC_TA_DEMO_THUC_TE_NHO.md) — đặc tả demo cảm biến, năm mode, dữ liệu, fault injection, test oracle, benchmark và kịch bản live.
-
-Các tài liệu cũ được giữ để truy vết phiên bản ban đầu:
-
-- [`SUON_BAO_CAO_CHUONG_4.md`](docs/SUON_BAO_CAO_CHUONG_4.md) — sườn 42 slide ban đầu;
-- [`PHAN_CONG_6_THANH_VIEN.md`](docs/PHAN_CONG_6_THANH_VIEN.md) — phân công tóm tắt ban đầu;
-- [`PHAN_CONG_CHI_TIET_6_THANH_VIEN.md`](docs/PHAN_CONG_CHI_TIET_6_THANH_VIEN.md) — bản chi tiết v1.
 
 Khi có khác biệt, bộ tài liệu đánh số `00`–`04` là phương án mới được ưu tiên.
 

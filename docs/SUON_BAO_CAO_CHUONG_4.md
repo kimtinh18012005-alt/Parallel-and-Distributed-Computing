@@ -1,5 +1,7 @@
 # SƯỜN BÁO CÁO CHƯƠNG 4 — TÍNH TOÁN BẤT ĐỒNG BỘ
 
+> **BẢN V1 LƯU TRỮ — KHÔNG DÙNG ĐỂ GIAO VIỆC MỚI.** Xem [phân công A–Z chính thức](02_PHAN_CONG_6_THANH_VIEN_A_Z.md) và [README](../README.md).
+
 > Đây là **kế hoạch nội dung**, chưa phải PowerPoint hoàn chỉnh. Nhóm duyệt sườn, điền tên thành viên và thống nhất thời lượng trước khi thiết kế slide.
 
 ## 1. Kết quả đọc tài liệu gốc

@@ -1,5 +1,7 @@
 # PHÂN CÔNG CHI TIẾT NHÓM 6 THÀNH VIÊN
 
+> **BẢN V1 LƯU TRỮ — KHÔNG DÙNG ĐỂ GIAO VIỆC MỚI.** Xem [phân công A–Z chính thức](02_PHAN_CONG_6_THANH_VIEN_A_Z.md) và [README](../README.md).
+
 > Tài liệu này là **kế hoạch phân công để nhóm duyệt**, chưa phải nội dung PowerPoint hoàn chỉnh. Thay `TV1`…`TV6` bằng họ tên và MSSV sau khi thống nhất.
 
 ## 1. Nguyên tắc chia việc

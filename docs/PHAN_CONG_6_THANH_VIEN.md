@@ -1,5 +1,7 @@
 # PHÂN CÔNG NHÓM 6 THÀNH VIÊN
 
+> **BẢN V1 LƯU TRỮ — KHÔNG DÙNG ĐỂ GIAO VIỆC MỚI.** Xem [phân công A–Z chính thức](02_PHAN_CONG_6_THANH_VIEN_A_Z.md) và [README](../README.md).
+
 > Thay `TV1`…`TV6` bằng họ tên và MSSV. Phân công theo **mạch kiến thức**, không chỉ theo số slide: mỗi người chịu trách nhiệm trả lời câu hỏi thuộc phần mình.
 
 ## Phân chia khi thuyết trình

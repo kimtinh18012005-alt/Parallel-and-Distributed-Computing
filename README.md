@@ -47,6 +47,12 @@ Bằng chứng đối chiếu từng trang và mức `Covered/Partial/Missing` n
 
 Đây là **phân công trách nhiệm sâu**, không phải ranh giới được phép học. Mọi người vẫn phải nắm 40 năng lực chung trong tài liệu học chéo.
 
+### Cam kết cân bằng khối lượng sáu thành viên
+
+Mỗi thành viên có cùng định mức **100 điểm công việc, khoảng 48 giờ** và cùng một bộ đầu ra: 4.500–5.500 từ nghiên cứu, ít nhất 5 nguồn, 8 slide chuẩn/6 slide rút gọn/3 slide phụ lục, 3 tài sản trực quan, 2 ví dụ đúng + 2 phản ví dụ, 1 module demo + 6 test, 20 câu hỏi có đáp án, 1 buổi teach-back, 1 lượt backup và cùng quy trình issue/branch/commit/PR/review. Chi tiết và quy tắc tái phân bổ nằm ở mục 5 của [`02_PHAN_CONG_6_THANH_VIEN_A_Z.md`](docs/02_PHAN_CONG_6_THANH_VIEN_A_Z.md).
+
+Vai trò “điều phối” chỉ có nhiệm vụ tạo template và tổng hợp, được time-box như nhau. TV6 không viết/tích hợp thay năm owner; mỗi người tự đưa module và nội dung của mình qua test/interface chung.
+
 ## Quy mô slide dạng mô-đun — chưa tạo PowerPoint
 
 Không khóa cứng một số slide trước khi biết thời lượng giảng viên cho phép. Sườn mới chuẩn bị ba cấu hình:

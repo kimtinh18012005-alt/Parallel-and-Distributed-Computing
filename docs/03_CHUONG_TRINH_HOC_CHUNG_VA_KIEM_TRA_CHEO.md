@@ -91,6 +91,18 @@ Mỗi cụm kiến thức có ba tầng trách nhiệm:
 
 Không dùng mô hình “TV6 biết hết demo, năm người còn lại chỉ nói slide”. Mỗi thành viên phải clone repo, chạy cùng lệnh, biết cấu trúc input/output, chỉ ra một lỗi được tiêm vào và đọc được benchmark.
 
+### 3.1. Cổng công bằng trước khi tính là hoàn thành
+
+Owner khác nhau về chủ đề nhưng không khác nhau về lượng việc. Cả sáu cùng phải hoàn thành định mức 100 điểm/48 giờ trong tài liệu phân công: cùng khối lượng nghiên cứu, slide, tài sản minh họa, module demo, sáu loại test, ngân hàng 20 câu, teach-back, backup và GitHub. Vai trò tổng hợp không cho phép đẩy việc của người khác sang người điều phối.
+
+Khi kiểm tra tiến độ, nhóm phải xem đồng thời ba lớp:
+
+1. **Khối lượng:** điểm việc và giờ thực tế chênh không quá ngưỡng đã quy định.
+2. **Chất lượng:** sản phẩm qua review, nguồn và test; không chỉ đủ số lượng.
+3. **Kiến thức:** mọi người cùng đạt quiz/oral/lab, kể cả câu ngoài chuyên môn.
+
+Nếu một người xong sớm, người đó nhận một task độc lập từ backlog chung qua GitHub issue; không sửa âm thầm hoặc làm hộ toàn bộ module của người khác.
+
 ## 4. Lộ trình học chung tám buổi
 
 Mỗi buổi nên dài 90–120 phút. Nếu thời gian gấp, có thể ghép hai buổi nhưng không bỏ bài kiểm tra đầu ra.

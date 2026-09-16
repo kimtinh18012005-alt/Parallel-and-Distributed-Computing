@@ -164,6 +164,76 @@ Không dồn nguồn, kiểm thử, thuật ngữ, QA hoặc rehearsal cho một
 
 Quy tắc “người quản lý không phải người làm thay” áp dụng cho cả sáu vai trò.
 
+### 5.1. Hợp đồng khối lượng bằng nhau cho từng thành viên
+
+Chuyên môn của sáu người khác nhau, nhưng **khối lượng bắt buộc phải bằng nhau và đo được**. Mỗi người nhận đúng một gói công việc chuẩn sau:
+
+| Hạng mục | Khối lượng của **mỗi** thành viên | Bằng chứng nghiệm thu |
+|---|---:|---|
+| Kiến thức chung A–Z | Học đủ 40 năng lực | Quiz chung đạt từ 85%, không cụm nào dưới 70%, trả lời được câu ngoài chuyên môn |
+| Nghiên cứu chuyên sâu | 4.500–5.500 từ, không tính hình và phụ lục | Tài liệu có cấu trúc, ít nhất 5 nguồn chính thức/học thuật, có bảng truy vết claim–nguồn |
+| Slide chuẩn/rút gọn/phụ lục | 8 / 6 / 3 slide | Slide có thông điệp, minh họa, lời giải thích và câu chuyển |
+| Thời lượng thuyết trình | 8–9 phút ở bản 48 slide; 5–6 phút ở bản 36 slide | Rehearsal lệch không quá 30 giây so với phần được giao |
+| Tài sản học tập | 3 sơ đồ/bảng và 4 ví dụ: 2 đúng, 2 phản ví dụ | Người khác dùng tài sản đó để giải thích lại được cơ chế |
+| Demo | 1 module/stage, 6 test case, 1 fault injection, 1 metric | Có đặc tả giao diện, expected result và checklist tích hợp; giai đoạn này chưa viết code |
+| Ngân hàng câu hỏi | 12 trắc nghiệm, 6 tự luận ngắn, 2 bài debug/thiết kế | Có đáp án, giải thích vì sao đúng/sai và mức độ câu hỏi |
+| Dạy chéo | 1 buổi teach-back 30 phút | Bốn người không phải owner đặt được ít nhất 1 câu hỏi/người |
+| Review và backup | Review 1 cụm, 5 mục review bắt buộc, trình bày thay 1 lần | Biên bản review, lỗi đã sửa và video/phiếu rehearsal |
+| GitHub | 1 issue, 1 branch, ít nhất 3 commit có ý nghĩa, 1 pull request, review 2 pull request | Lịch sử GitHub truy vết được từ issue → commit → PR → review |
+
+“Ít nhất” chỉ dùng cho chất lượng và nguồn; không được lấy số lượng lớn hơn để mặc nhiên giao thêm việc cho một người. Nếu cần thêm tài sản, nhóm tạo issue chung và chia luân phiên.
+
+### 5.2. Thang 100 điểm khối lượng — áp dụng giống nhau cho cả sáu
+
+Đây là **điểm ước lượng công việc**, không phải điểm môn học.
+
+| Gói công việc | Điểm/người | Giờ dự kiến/người |
+|---|---:|---:|
+| Học và kiểm tra 40 năng lực chung | 20 | 10 |
+| Nghiên cứu cụm chuyên sâu và kiểm nguồn | 20 | 10 |
+| Slide, speaker notes và kịch bản nói | 15 | 7 |
+| Đặc tả module demo, test và fault injection | 15 | 7 |
+| Câu hỏi, đáp án và teach-back | 10 | 5 |
+| Review, backup và sửa sau phản biện | 10 | 5 |
+| GitHub, vai trò xuyên suốt và rehearsal | 10 | 4 |
+| **Tổng của mỗi thành viên** | **100** | **48** |
+
+Ngưỡng cân bằng:
+
+1. Kế hoạch của mỗi người là 100 điểm và 48 giờ; chênh lệch dự kiến không quá 5%.
+2. Nếu log thực tế của một người vượt người khác trên 10%, trưởng nhóm phải tách task và chuyển phần độc lập cho người đang ít tải hơn.
+3. Không dùng số trang hoặc số slide đơn lẻ để kết luận đã công bằng; phải đối chiếu cả bảng trên.
+4. Phần Advanced phát sinh được đưa vào backlog chung rồi chia theo điểm còn trống, không tự động đẩy cho owner.
+5. Mỗi tuần cập nhật một bảng workload trên GitHub Project/Issue: việc dự kiến, việc đã làm, giờ thực tế, blocker và phần cần tái phân bổ.
+
+### 5.3. Sáu vai trò xuyên suốt cũng phải ngang tải
+
+Người phụ trách vai trò xuyên suốt chỉ **tạo mẫu, kiểm quy ước và tổng hợp**; mỗi thành viên vẫn tự hoàn thành phần của mình. Mỗi vai trò bị time-box ở 2 giờ trong gói 4 giờ “GitHub, vai trò xuyên suốt và rehearsal”, để mỗi người còn 2 giờ cho thao tác repository và diễn tập:
+
+| Thành viên | Sản phẩm điều phối duy nhất | Không được biến thành việc riêng của người đó |
+|---|---|---|
+| TV1 | Một glossary/template phạm vi chung | Từng người tự nộp thuật ngữ và nguồn của cụm mình |
+| TV2 | Một template ví dụ/test chung | Từng người tự viết ví dụ và 6 test của module mình |
+| TV3 | Một template citation/benchmark chung | Từng người tự kiểm nguồn và ghi metadata phần mình |
+| TV4 | Một template diagram/speaker-note chung | Từng người tự tạo 3 tài sản và lời nói phần mình |
+| TV5 | Một template rubric/fault matrix chung | Từng người tự nộp 20 câu và fault injection phần mình |
+| TV6 | Một template issue/PR/runbook chung | Từng người tự tích hợp, sửa và trình diễn module mình |
+
+TV6 không phải “lập trình viên tích hợp của cả nhóm”; TV1 cũng không phải “thư ký của cả nhóm”. Khi ghép tài liệu hoặc demo, owner của module phải tự sửa đến khi qua interface/test chung.
+
+### 5.4. Ma trận chốt tải theo tên thành viên
+
+| Thành viên | Chung A–Z | Chuyên sâu | Slide/nói | Demo/test | Câu hỏi/dạy chéo | Review/backup | GitHub/rehearsal | Tổng điểm | Giờ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| TV1 | 20 | 20 | 15 | 15 | 10 | 10 | 10 | **100** | **48** |
+| TV2 | 20 | 20 | 15 | 15 | 10 | 10 | 10 | **100** | **48** |
+| TV3 | 20 | 20 | 15 | 15 | 10 | 10 | 10 | **100** | **48** |
+| TV4 | 20 | 20 | 15 | 15 | 10 | 10 | 10 | **100** | **48** |
+| TV5 | 20 | 20 | 15 | 15 | 10 | 10 | 10 | **100** | **48** |
+| TV6 | 20 | 20 | 15 | 15 | 10 | 10 | 10 | **100** | **48** |
+
+Đây là baseline để theo dõi, không phải lý do bỏ qua độ khó thực tế. Bảng GitHub hằng tuần phải thay cột giờ bằng số thực tế; khi lệch ngưỡng, tái phân bổ task trước khi mở rộng phạm vi.
+
 ---
 
 ## 6. Demo chung cần thiết kế — giám sát nhiều trạm cảm biến
@@ -211,6 +281,19 @@ Trạm cảm biến
 - Có timeout, cancellation và failure injection.
 - Hoạt động đúng trên Windows với main guard.
 - Có chế độ offline và ghi rõ dữ liệu/độ trễ mô phỏng.
+
+### 6.5. Chia demo cân bằng cho sáu người
+
+| Thành viên | Module/stage sở hữu | Ranh giới trách nhiệm |
+|---|---|---|
+| TV1 | Data contract, sinh dữ liệu và sequential baseline | Cung cấp input cố định, correctness oracle và metric nền; không viết mode của người khác |
+| TV2 | Blocking adapter và ThreadPool mode | Quản lý Future, collection order, timeout/error của thread; dùng contract của TV1 |
+| TV3 | CPU stage và ProcessPool mode | Main guard, serialization, worker sizing, digest và benchmark CPU; không gánh benchmark của mọi mode |
+| TV4 | Async adapter và asyncio mode | Coroutine/Task, scheduling trace và bridge tới CPU stage; không gánh reliability policy |
+| TV5 | Bounded Queue, Semaphore và failure policy | Backpressure, retry/cancel/shutdown và fault matrix; không tích hợp thay owner |
+| TV6 | Hybrid mode, CLI và integration contract | Chuẩn hóa interface/runbook/report schema; chỉ ghép module đã được owner làm cho pass test |
+
+Mỗi người, bất kể module nào, phải nộp cùng sáu loại test: 1 happy path, 1 boundary, 1 failure, 1 timeout/cancellation, 1 resource/cleanup và 1 integration test. Mỗi người còn phải review module của backup pair, tự chạy toàn bộ năm mode ít nhất một lần và ký checklist kết quả. Nhờ vậy “tích hợp” là hoạt động của sáu owner, không phải phần việc vô hạn của TV6.
 
 Tài liệu này chỉ phân công và đặc tả. Không tạo code demo, PPTX hoặc PDF ở giai đoạn này.
 
@@ -353,14 +436,14 @@ Không xóa ma trận thuật ngữ, correctness check hoặc overhead; chuyển
 
 ### 7.7. Deliverables
 
-- Tài liệu nền tảng 15–20 trang.
-- Glossary và quy tắc thuật ngữ toàn nhóm.
-- Coverage map nối file gốc với sườn.
-- Ba timeline, ma trận thuật ngữ, sơ đồ process/thread/coroutine.
-- Đặc tả baseline và correctness oracle.
-- 12 câu trắc nghiệm, 6 câu tự luận, 2 bài bắt lỗi.
-- Kịch bản giải thích 1/3/8 phút.
-- Biên bản review phần TV4.
+- Hồ sơ chuyên sâu 4.500–5.500 từ về nền tảng, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
+- Đúng 3 tài sản chính: ma trận thuật ngữ, timeline so sánh và sơ đồ process/thread/coroutine; kèm 2 ví dụ đúng, 2 phản ví dụ.
+- Bộ 8 slide chuẩn, ánh xạ thành 6 slide rút gọn và 3 slide phụ lục; có speaker notes và câu chuyển.
+- Đặc tả module data contract/sequential baseline, đủ 6 loại test, 1 fault injection và metric nền; chưa viết code.
+- 12 câu trắc nghiệm, 6 câu tự luận và 2 bài bắt lỗi, có đáp án giải thích.
+- Kịch bản giải thích 1/3/8 phút và một buổi teach-back 30 phút.
+- Biên bản review phần TV4 với 5 mục review bắt buộc; trình bày thay TV4 một lần.
+- 1 issue, 1 branch, ít nhất 3 commit có ý nghĩa, 1 pull request và review 2 pull request: 1 của backup pair, 1 chéo chuyên môn.
 
 ### 7.8. Câu hỏi phản biện
 
@@ -518,12 +601,14 @@ TV2 giải thích abstraction cấp cao của concurrent.futures và cách dùng
 
 ### 8.7. Deliverables
 
-- Tài liệu Future/Executor/ThreadPool 15–20 trang.
-- State diagram, API table và hai collection timeline.
-- Hai ví dụ đúng, hai phản ví dụ, một deadlock có timeout bảo vệ.
-- Đặc tả mode thread và test plan; chưa viết code.
-- 12 câu trắc nghiệm, 6 câu tự luận, 2 bài debug.
-- Biên bản review phần TV5.
+- Hồ sơ chuyên sâu 4.500–5.500 từ về Future/Executor/ThreadPool, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
+- Đúng 3 tài sản chính: state diagram, API table và collection-order timeline; kèm 2 ví dụ đúng, 2 phản ví dụ.
+- Bộ 8 slide chuẩn, ánh xạ thành 6 slide rút gọn và 3 slide phụ lục; có speaker notes và câu chuyển.
+- Đặc tả blocking adapter/ThreadPool mode, đủ 6 loại test, 1 fault injection và metric; chưa viết code.
+- 12 câu trắc nghiệm, 6 câu tự luận và 2 bài debug, có đáp án giải thích.
+- Kịch bản giải thích 1/3/8 phút và một buổi teach-back 30 phút.
+- Biên bản review phần TV5 với 5 mục review bắt buộc; trình bày thay TV5 một lần.
+- 1 issue, 1 branch, ít nhất 3 commit có ý nghĩa, 1 pull request và review 2 pull request: 1 của backup pair, 1 chéo chuyên môn.
 
 ### 8.8. Câu hỏi phản biện
 
@@ -681,12 +766,14 @@ TV3 giúp nhóm hiểu vì sao process có thể khai thác nhiều core cho pur
 
 ### 9.7. Deliverables
 
-- Tài liệu ProcessPool/GIL/benchmark 15–20 trang.
-- Sơ đồ IPC, bảng pickling và platform checklist.
-- Benchmark protocol, schema CSV/JSON và biểu đồ dự kiến.
-- Hai workload size để chứng minh overhead.
-- 12 câu trắc nghiệm, 6 câu tự luận, 2 bài debug.
-- Biên bản review phần TV6.
+- Hồ sơ chuyên sâu 4.500–5.500 từ về ProcessPool/GIL/benchmark, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
+- Đúng 3 tài sản chính: sơ đồ IPC, bảng pickling và benchmark chart; kèm 2 ví dụ đúng, 2 phản ví dụ.
+- Bộ 8 slide chuẩn, ánh xạ thành 6 slide rút gọn và 3 slide phụ lục; có speaker notes và câu chuyển.
+- Đặc tả CPU stage/ProcessPool mode, đủ 6 loại test, 1 fault injection và metric; chưa viết code.
+- 12 câu trắc nghiệm, 6 câu tự luận và 2 bài debug, có đáp án giải thích.
+- Kịch bản giải thích 1/3/8 phút và một buổi teach-back 30 phút.
+- Biên bản review phần TV6 với 5 mục review bắt buộc; trình bày thay TV6 một lần.
+- 1 issue, 1 branch, ít nhất 3 commit có ý nghĩa, 1 pull request và review 2 pull request: 1 của backup pair, 1 chéo chuyên môn.
 
 ### 9.8. Câu hỏi phản biện
 
@@ -847,12 +934,14 @@ TV4 phải:
 
 ### 10.7. Deliverables
 
-- Tài liệu asyncio core 18–22 trang.
-- Event-loop diagram, ba scheduling trace và type comparison.
-- Hai ví dụ đúng, hai phản ví dụ.
-- Đặc tả mode async; chưa viết code.
-- 12 câu trắc nghiệm, 6 câu tự luận, 2 bài debug.
-- Biên bản review phần TV1.
+- Hồ sơ chuyên sâu 4.500–5.500 từ về event loop/coroutine/Task, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
+- Đúng 3 tài sản chính: event-loop diagram, scheduling trace và type comparison; kèm 2 ví dụ đúng, 2 phản ví dụ.
+- Bộ 8 slide chuẩn, ánh xạ thành 6 slide rút gọn và 3 slide phụ lục; có speaker notes và câu chuyển.
+- Đặc tả async adapter/asyncio mode, đủ 6 loại test, 1 fault injection và metric; chưa viết code.
+- 12 câu trắc nghiệm, 6 câu tự luận và 2 bài debug, có đáp án giải thích.
+- Kịch bản giải thích 1/3/8 phút và một buổi teach-back 30 phút.
+- Biên bản review phần TV1 với 5 mục review bắt buộc; trình bày thay TV1 một lần.
+- 1 issue, 1 branch, ít nhất 3 commit có ý nghĩa, 1 pull request và review 2 pull request: 1 của backup pair, 1 chéo chuyên môn.
 
 ### 10.8. Câu hỏi phản biện
 
@@ -1012,12 +1101,14 @@ TV5 biến chương trình “chạy được khi mọi thứ tốt” thành ch
 
 ### 11.7. Deliverables
 
-- Tài liệu reliability/coordination 18–22 trang.
-- Primitive table, cancellation state diagram và shutdown sequence.
-- Hai race/resource-leak phản ví dụ và cách sửa.
-- Đặc tả robust mode/test matrix; chưa viết code.
-- 12 câu trắc nghiệm, 6 câu tự luận, 2 bài debug.
-- Biên bản review phần TV2.
+- Hồ sơ chuyên sâu 4.500–5.500 từ về reliability/coordination, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
+- Đúng 3 tài sản chính: primitive table, cancellation state diagram và shutdown sequence; kèm 2 ví dụ đúng, 2 phản ví dụ.
+- Bộ 8 slide chuẩn, ánh xạ thành 6 slide rút gọn và 3 slide phụ lục; có speaker notes và câu chuyển.
+- Đặc tả Queue/Semaphore/failure policy, đủ 6 loại test, 1 fault injection và metric; chưa viết code.
+- 12 câu trắc nghiệm, 6 câu tự luận và 2 bài debug, có đáp án giải thích.
+- Kịch bản giải thích 1/3/8 phút và một buổi teach-back 30 phút.
+- Biên bản review phần TV2 với 5 mục review bắt buộc; trình bày thay TV2 một lần.
+- 1 issue, 1 branch, ít nhất 3 commit có ý nghĩa, 1 pull request và review 2 pull request: 1 của backup pair, 1 chéo chuyên môn.
 
 ### 11.8. Câu hỏi phản biện
 
@@ -1175,12 +1266,14 @@ TV6 kết nối các mảnh thành một quy trình ra quyết định và demo 
 
 ### 12.7. Deliverables
 
-- Tài liệu decision/integration/distributed 15–20 trang.
-- Decision tree, decision matrix, hybrid architecture và resource budget.
-- Demo specification tổng, runbook và fallback.
-- Report schema năm mode; chưa có số liệu giả.
-- 12 câu trắc nghiệm, 6 câu tự luận, 2 bài debug/architecture.
-- Biên bản review phần TV3.
+- Hồ sơ chuyên sâu 4.500–5.500 từ về decision/hybrid/distributed, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
+- Đúng 3 tài sản chính: decision tree, hybrid architecture và resource-budget matrix; kèm 2 ví dụ đúng, 2 phản ví dụ.
+- Bộ 8 slide chuẩn, ánh xạ thành 6 slide rút gọn và 3 slide phụ lục; có speaker notes và câu chuyển.
+- Đặc tả hybrid mode/CLI/integration contract, đủ 6 loại test, 1 fault injection và metric; chưa viết code.
+- 12 câu trắc nghiệm, 6 câu tự luận và 2 bài debug/kiến trúc, có đáp án giải thích.
+- Kịch bản giải thích 1/3/8 phút và một buổi teach-back 30 phút.
+- Biên bản review phần TV3 với 5 mục review bắt buộc; trình bày thay TV3 một lần.
+- 1 issue, 1 branch, ít nhất 3 commit có ý nghĩa, 1 pull request và review 2 pull request: 1 của backup pair, 1 chéo chuyên môn.
 
 ### 12.8. Câu hỏi phản biện
 
@@ -1240,7 +1333,7 @@ Mỗi chuyên gia viết phần mình theo template:
 
 ### 13.3. Vòng 3 — Teach-back
 
-- Mỗi chuyên gia dạy 25–30 phút.
+- Mỗi chuyên gia dạy 30 phút.
 - Reviewer đặt ít nhất năm câu hỏi.
 - Bốn người còn lại viết bản tóm tắt bằng lời của mình.
 - Mỗi người phải nêu một điều “trước đây hiểu sai” và cách sửa.
@@ -1304,8 +1397,8 @@ Mỗi người:
 
 Khi demo:
 
-- TV6 điều khiển luồng trình diễn.
-- Mỗi thành viên có 45–75 giây giải thích stage của mình.
+- Mỗi thành viên tự điều khiển và giải thích đúng một segment 45–75 giây thuộc stage của mình.
+- TV6 chỉ mở/đóng lệnh tích hợp và giữ integration contract; không chạy thay năm segment còn lại.
 - Người sở hữu nêu cơ chế.
 - Reviewer nêu failure/giới hạn.
 - Bảng kết quả chỉ hiện số đã đo thật sau khi demo được triển khai.
@@ -1316,7 +1409,7 @@ Khi demo:
 
 ### 15.1. Epic và Issue
 
-Mỗi cụm kiến thức là một Epic. Mỗi thành viên có tối thiểu các Issue:
+Toàn Chương 4 là một Epic. Mỗi thành viên có đúng một tracking Issue theo cùng template 12 checkbox:
 
 1. Đối chiếu file gốc.
 2. Nghiên cứu nguồn chính thức.
@@ -1338,10 +1431,10 @@ Mỗi cụm kiến thức là một Epic. Mỗi thành viên có tối thiểu c
 - Một PR chỉ giải quyết một Issue hoặc một nhóm thay đổi liền mạch.
 - PR phải nêu: phạm vi, nguồn, version, hình/code liên quan, cách tự kiểm, phần chưa chắc.
 - Ít nhất reviewer/backup duyệt.
-- Claim hiệu năng cần TV3 duyệt.
-- Thuật ngữ mới cần TV1 duyệt.
-- Failure/cancellation claim cần TV5 duyệt.
-- Diagram/timeline chính cần TV4 duyệt.
+- Mỗi người review đúng một PR của backup pair và một PR chéo chuyên môn; mỗi review có năm mục bắt buộc, có thể là xác nhận, câu hỏi, lỗi hoặc đề xuất cải thiện.
+- Sáu loại review chéo được chia đều: TV1 phạm vi/thuật ngữ; TV2 Future/Executor; TV3 benchmark/hiệu năng; TV4 event loop/diagram; TV5 failure/cancellation; TV6 kiến trúc/interface/phân tán.
+- Nếu một PR chạm nhiều miền, chỉ định một reviewer chính và ghi câu hỏi cho owner miền khác trong Issue; không tự động dồn nhiều lượt review cho một người.
+- Lỗi nghiêm trọng phát hiện ngoài năm mục vẫn phải ghi thành Issue; phần sửa phát sinh được cộng vào workload và tái phân bổ nếu vượt ngưỡng.
 
 ### 15.3. Definition of Ready cho PR
 
@@ -1403,7 +1496,7 @@ Nếu có nhiều thời gian hơn, giữ nguyên thứ tự và kéo dài giai 
 ### Gate 4 — Kiểm chứng
 
 - Demo specification có correctness oracle.
-- Mỗi mode có test/failure plan.
+- Mỗi owner có đúng sáu loại test, một fault injection và một metric cho module/stage của mình.
 - Benchmark protocol công bằng, tái lập.
 - Không có số liệu giả hoặc cherry-picking.
 
@@ -1428,22 +1521,23 @@ Nếu có nhiều thời gian hơn, giữ nguyên thứ tự và kéo dài giai 
 
 Một thành viên chỉ được đánh dấu hoàn thành khi có đủ:
 
-- Tài liệu chuyên môn theo template.
+- Tài liệu chuyên môn 4.500–5.500 từ theo template, ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
 - Tám slide chuẩn ở mức outline.
 - Mapping sáu slide rút gọn.
 - Ba slide phụ lục.
 - Mục tiêu và prerequisite.
-- Ít nhất hai minh họa cơ chế.
-- Ít nhất một ví dụ đúng và một phản ví dụ.
+- Đúng ba sơ đồ/bảng chính.
+- Hai ví dụ đúng và hai phản ví dụ.
 - Demo specification cho stage mình.
-- Test/failure plan.
+- Sáu loại test, một fault injection và một metric.
 - 12 MCQ, 6 tự luận, 2 debug.
 - Câu trả lời mẫu có nguồn.
-- Review phần backup.
+- Review phần backup với năm mục bắt buộc: xác nhận, câu hỏi, lỗi hoặc đề xuất cải thiện.
 - Sửa hết comment nghiêm trọng.
-- Teach-back và rehearsal.
+- Teach-back 30 phút, rehearsal phần chính và rehearsal phần backup.
 - Vượt quiz/oral.
 - Có thể trình bày phần backup.
+- Có 1 tracking Issue, 1 branch, ít nhất 3 commit có ý nghĩa, 1 PR và đủ lượt review được giao.
 
 ---
 
@@ -1475,6 +1569,8 @@ Báo cáo chỉ hoàn thành khi:
 ---
 
 ## 20. Rubric tự đánh giá 100 điểm
+
+Rubric dưới đây chấm **chất lượng chung của sản phẩm báo cáo**, khác với thang 100 điểm **khối lượng cho từng người** ở mục 5.2. Nhóm phải đạt cả hai: sản phẩm tốt và công việc được chia đều.
 
 | Hạng mục | Điểm | Điều kiện |
 |---|---:|---|

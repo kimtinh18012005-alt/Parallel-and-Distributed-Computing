@@ -568,13 +568,17 @@ Không chỉnh tay số liệu để “đẹp”. Nếu live result khác dữ 
 | TV5 | timeout, cancellation, Queue, Semaphore, retry và debug | overload/leak/graceful-shutdown tests | review executor lifecycle |
 | TV6 | hybrid integration, CLI, result report và runbook | cross-mode equivalence/release tests | review asyncio–process bridge |
 
-TV6 tích hợp nhưng không viết thay năm module. Mọi thành viên phải:
+TV6 duy trì integration contract và hybrid mode nhưng không viết thay năm module. Mỗi owner phải tự đưa module của mình qua interface chung, sửa lỗi tích hợp thuộc module đó và nộp cùng định mức: 6 test gồm happy path, boundary, failure, timeout/cancellation, resource/cleanup và integration; 1 fault injection; 1 metric; review module của backup pair.
+
+Mọi thành viên phải:
 
 - clone và chạy cả năm mode;
 - đọc được cấu hình/output;
 - giải thích một trace không thuộc module mình;
 - sửa được ít nhất một fault;
 - trình bày kết luận benchmark có điều kiện.
+
+Khối lượng demo được tính 15/100 điểm và khoảng 7/48 giờ cho từng người như nhau. Nếu một module vượt định mức vì phát sinh kỹ thuật, tách phần độc lập thành issue chung và giao cho người còn tải; không mặc định dồn cho TV6.
 
 ## 18. Cấu trúc thư mục dự kiến — chưa tạo ở giai đoạn sườn
 

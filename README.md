@@ -1,135 +1,197 @@
 # Parallel and Distributed Computing
 
 ## Chương 4 — Phương pháp tính toán bất đồng bộ trong Python
-## Phân công chính thức mới
 
-| Thành viên | Chuyên môn chính | Người backup | Trách nhiệm xuyên suốt |
-|---|---|---|---|
-| TV1 | Nền tảng: sequential/concurrency/parallel/async, hai trục sync–async và blocking–non-blocking, workload, process/thread/coroutine | TV4 | scope, mapping tài liệu gốc, glossary và baseline |
-| TV2 | `concurrent.futures`, `Future`, `Executor`, `ThreadPoolExecutor`, order/error/cancel/deadlock | TV5 | bảng API, ví dụ Future, review lifecycle và shutdown |
-| TV3 | `ProcessPoolExecutor`, GIL, serialization/pickling, platform caveat và benchmark | TV6 | protocol đo, raw data và kiểm tra claim hiệu năng |
-| TV4 | event loop, coroutine/awaitable, Task/Future, orchestration và structured concurrency | TV1 | timeline/sơ đồ runtime và kiểm citation `asyncio` |
-| TV5 | timeout, cancellation, error, synchronization, Queue, backpressure, test/debug/shutdown | TV2 | fault injection, test matrix và checklist độ tin cậy |
-| TV6 | kiến trúc lai, cây chọn công cụ, demo tích hợp, giới hạn suy diễn và liên hệ distributed systems | TV3 | tích hợp, runbook, phương án offline và rehearsal |
+| Thuộc tính dự án | Giá trị |
+|---|---|
+| Nhóm thực hiện | 6 thành viên |
+| Mục tiêu | Nghiên cứu, giảng giải và kiểm chứng toàn bộ Chương 4 |
+| Phạm vi kỹ thuật | Nền tảng concurrency/asynchrony, `concurrent.futures`, `asyncio`, reliability, performance và kiến trúc lai |
+| Cấu hình trình bày | 48 slide chuẩn hoặc 36 slide rút gọn; 18 slide phụ lục |
+| Demo | Trung tâm giám sát nhiều trạm cảm biến, 5 chế độ thực thi |
+| Mô hình trách nhiệm | Owner chuyên môn + reviewer/backup + chuẩn kiến thức chung |
+| Baseline khối lượng | 100 điểm, 48 giờ dự kiến và 8 work package/người |
+| Phạm vi release hiện tại | Hồ sơ dự án, kiến thức, phân công, đào tạo, demo specification và WBS |
 
-Đây là **phân công trách nhiệm sâu**, không phải ranh giới được phép học. Mọi người vẫn phải nắm 40 năng lực chung trong tài liệu học chéo.
+Repository là không gian điều hành duy nhất cho dự án báo cáo Chương 4. Phạm vi, nội dung, nhiệm vụ, nguồn, review, demo và tiêu chí nghiệm thu đều được quản lý bằng tài liệu có mã, GitHub Issue và Pull Request.
 
-### Cam kết cân bằng khối lượng sáu thành viên
+---
 
-Mỗi thành viên có cùng định mức **100 điểm công việc, khoảng 48 giờ** và cùng một bộ đầu ra: 4.500–5.500 từ nghiên cứu, ít nhất 5 nguồn, 8 slide chuẩn/6 slide rút gọn/3 slide phụ lục, 3 tài sản trực quan, 2 ví dụ đúng + 2 phản ví dụ, 1 module demo + 6 test, 20 câu hỏi có đáp án, 1 buổi teach-back, 1 lượt backup và cùng quy trình issue/branch/commit/PR/review. Chi tiết và quy tắc tái phân bổ nằm ở mục 5 của [`02_PHAN_CONG_6_THANH_VIEN_A_Z.md`](docs/02_PHAN_CONG_6_THANH_VIEN_A_Z.md).
+## 1. Luồng thực hiện
 
-Vai trò “điều phối” chỉ có nhiệm vụ tạo template và tổng hợp, được time-box như nhau. TV6 không viết/tích hợp thay năm owner; mỗi người tự đưa module và nội dung của mình qua test/interface chung.
-
-## Quy mô slide dạng mô-đun — chưa tạo PowerPoint
-
-Không khóa cứng một số slide trước khi biết thời lượng giảng viên cho phép. Sườn mới chuẩn bị ba cấu hình:
-
-| Cấu hình | Quy mô | Thời lượng nội dung | Tổng với demo và Q&A | Nguyên tắc |
-|---|---:|---:|---:|---|
-| Rút gọn | 36 slide chính, 6/người | khoảng 30–36 phút | khoảng 46–56 phút | giữ mạch Core, chuyển chi tiết sang notes/phụ lục |
-| Chuẩn | 48 slide chính, 8/người | khoảng 48–55 phút | khoảng 66–75 phút | đủ nền tảng, cơ chế, reliability, demo và kết luận |
-| Phụ lục A–Z | 18 slide, 3/người | không tính vào mạch chính | dùng theo Q&A | version caveat, API matrix, phản ví dụ và câu khó |
-
-Số cuối cùng phải được chốt theo thời lượng thực tế. Tài liệu kiến thức có thể rất dài, nhưng mặt slide không được nhồi nguyên đoạn văn; lời giải thích chi tiết sau này nằm ở speaker notes, tài liệu GitHub và phụ lục.
-
-## Đọc repository theo thứ tự này
-
-1. [`00_DANH_GIA_DO_BAO_PHU_CHUONG_4.md`](docs/00_DANH_GIA_DO_BAO_PHU_CHUONG_4.md) — audit PDF 24 trang, kết luận đủ/thiếu, điểm dễ nói sai, Core/Applied/Advanced và cổng nghiệm thu.
-2. [`01_BAN_DO_KIEN_THUC_A_Z.md`](docs/01_BAN_DO_KIEN_THUC_A_Z.md) — bản đồ kiến thức rất chi tiết từ A–Z, semantics, bẫy, phiên bản và 33 nguồn chính thức.
-3. [`02_PHAN_CONG_6_THANH_VIEN_A_Z.md`](docs/02_PHAN_CONG_6_THANH_VIEN_A_Z.md) — nhiệm vụ cực chi tiết cho từng người, cấu hình slide mô-đun, đầu ra, câu hỏi, review và Definition of Done.
-4. [`03_CHUONG_TRINH_HOC_CHUNG_VA_KIEM_TRA_CHEO.md`](docs/03_CHUONG_TRINH_HOC_CHUNG_VA_KIEM_TRA_CHEO.md) — 40 năng lực chung, lộ trình 8 buổi, lab, quiz 60 câu, bảo vệ miệng và quality gates.
-5. [`04_DAC_TA_DEMO_THUC_TE_NHO.md`](docs/04_DAC_TA_DEMO_THUC_TE_NHO.md) — đặc tả demo cảm biến, năm mode, dữ liệu, fault injection, test oracle, benchmark và kịch bản live.
-
-Khi có khác biệt, bộ tài liệu đánh số `00`–`04` là phương án mới được ưu tiên.
-
-## Hợp đồng kiến thức của cả nhóm
-
-Mỗi thành viên phải làm được cả bốn mức:
-
-1. **Nhận biết:** định nghĩa đúng, không trộn thuật ngữ.
-2. **Giải thích:** tự vẽ timeline/state/flow và nói được cơ chế.
-3. **Áp dụng:** đọc, chạy, sửa và dự đoán mã.
-4. **Phân tích:** chọn mô hình, nêu overhead, giới hạn và phản biện số liệu.
-
-Điều kiện đề xuất trước khi làm PPTX:
-
-- đạt ít nhất 85% quiz chung và không có cụm Core nào dưới 70%;
-- trả lời câu ngẫu nhiên ngoài chuyên môn chính;
-- backup trình bày thay owner được;
-- cả sáu chạy/trace được mọi mode của demo;
-- mỗi người sửa được ít nhất một lỗi async không thuộc module mình;
-- mọi claim kỹ thuật có nguồn và đúng phiên bản;
-- không còn mục Core ở trạng thái thiếu trong coverage matrix.
-
-## Demo dự kiến
-
-**Trung tâm thu thập và phân tích dữ liệu từ nhiều trạm cảm biến**:
-
-```text
-trạm cảm biến
-→ lấy dữ liệu có độ trễ/lỗi
-→ giới hạn concurrency
-→ bounded Queue tạo backpressure
-→ validation
-→ phân tích CPU
-→ tổng hợp cảnh báo
-→ metric và báo cáo
+```mermaid
+flowchart LR
+    A[D01 Phạm vi và truy vết] --> B[D02 Bản đồ kiến thức]
+    B --> C[D03 Phân công 6 thành viên]
+    C --> D[D04 Học chung và kiểm tra chéo]
+    D --> E[D05 Đặc tả demo]
+    E --> F[D06 WBS 14 ngày]
+    F --> G[Content freeze]
+    G --> H[PPTX PDF và code demo]
+    H --> I[Rehearsal và báo cáo]
 ```
 
-Năm chế độ để so sánh:
+Mỗi giai đoạn có đầu vào, sản phẩm bàn giao và cổng phê duyệt. Artifact của giai đoạn sau chỉ được tạo khi cổng tương ứng trong D01 đã đóng.
 
-1. `sequential` — baseline và oracle tính đúng;
-2. `thread` — blocking I/O qua `ThreadPoolExecutor`;
-3. `process` — CPU-bound đủ lớn qua `ProcessPoolExecutor`;
-4. `async` — concurrent I/O bằng event loop/Task;
-5. `hybrid` — `asyncio` cho I/O và process pool cho CPU.
+## 2. Bộ hồ sơ chính thức
 
-Demo phải chạy offline, cùng seed/input, kiểm tra output tương đương trước benchmark, có timeout/cancellation/Queue/Semaphore/failure injection và lưu raw result. Hiện tại repository chỉ chứa **đặc tả**; theo đúng yêu cầu, chưa viết code và chưa tạo PPTX/PDF.
+Đọc theo thứ tự sau:
 
-## Các mốc thực hiện
+| Mã | Tài liệu | Mục đích sử dụng |
+|---|---|---|
+| D01 | [`00_HO_SO_DU_AN_VA_MA_TRAN_TRUY_VET.md`](docs/00_HO_SO_DU_AN_VA_MA_TRAN_TRUY_VET.md) | Project charter, phạm vi, 24 requirement nguồn, 12 requirement mở rộng và quality gates |
+| D02 | [`01_BAN_DO_KIEN_THUC_A_Z.md`](docs/01_BAN_DO_KIEN_THUC_A_Z.md) | Nền kiến thức Core/Applied/Advanced, semantics, version matrix, bẫy và nguồn chính thức |
+| D03 | [`02_PHAN_CONG_6_THANH_VIEN_A_Z.md`](docs/02_PHAN_CONG_6_THANH_VIEN_A_Z.md) | Nội dung từng slide, nhiệm vụ, đầu ra, câu hỏi, owner/backup và tiêu chí hoàn thành |
+| D04 | [`03_CHUONG_TRINH_HOC_CHUNG_VA_KIEM_TRA_CHEO.md`](docs/03_CHUONG_TRINH_HOC_CHUNG_VA_KIEM_TRA_CHEO.md) | 40 năng lực chung, 8 buổi học, lab, quiz, oral defense và review chéo |
+| D05 | [`04_DAC_TA_DEMO_THUC_TE_NHO.md`](docs/04_DAC_TA_DEMO_THUC_TE_NHO.md) | Data model, 5 mode, fault injection, test oracle, benchmark và runbook demo |
+| D06 | [`05_KE_HOACH_THUC_HIEN_14_NGAY.md`](docs/05_KE_HOACH_THUC_HIEN_14_NGAY.md) | 48 work package, dependency, timeline, workload dashboard, risk register và bàn giao |
 
-- [x] Đọc và mapping PDF Chương 4.
-- [x] Audit sườn cũ: đúng file gốc nhưng chưa đủ A–Z.
-- [x] Xây bản đồ kiến thức A–Z từ nguồn Python chính thức.
-- [x] Chia lại sáu chuyên môn cùng owner/backup.
-- [x] Đặc tả chương trình học chung và demo nhỏ.
-- [ ] Điền họ tên/MSSV vào TV1–TV6.
-- [ ] Hỏi giảng viên thời lượng; chốt 36 hay 48 slide chính.
-- [ ] Chốt phiên bản Python mục tiêu; khuyến nghị tối thiểu 3.11 nếu dùng `TaskGroup`/`asyncio.timeout` trong Core.
-- [ ] Tạo Issues và giao deadline nghiên cứu.
-- [ ] Sáu owner viết hồ sơ kiến thức; backup review.
-- [ ] Tổ chức quiz, oral defense và lab chung.
-- [ ] Chốt bài toán demo rồi mới viết/test/benchmark code.
-- [ ] Duyệt nội dung và speaker notes rồi mới thiết kế PPTX/PDF.
-- [ ] Rehearsal, chạy offline và chuẩn bị phương án B.
+Không duy trì tài liệu trùng vai trò hoặc phân công song song trong nhánh chính. D01–D06 là nguồn sự thật duy nhất của dự án.
 
-## Quy trình GitHub
+## 3. Kiến trúc nội dung và trách nhiệm
 
-1. Mỗi cụm kiến thức có Issue và acceptance criteria.
-2. Dùng nhánh `tvN/ten-cong-viec`, không sửa trực tiếp `main` trong giai đoạn nhóm làm việc.
-3. Commit nhỏ, mô tả nội dung thực: `docs: clarify TaskGroup failure semantics`.
-4. Mỗi Pull Request phải có owner khác review, liên kết nguồn và nêu cách kiểm chứng.
-5. Claim hiệu năng phải kèm input, môi trường, tham số, raw result và kiểm tra tính đúng.
-6. Nội dung ngoài PDF phải gắn nhãn Nền tảng, Applied hoặc Advanced để không làm loãng mạch chính.
-7. Mọi thay đổi API theo phiên bản phải vào version matrix.
+| Workstream | Owner | Backup | Slide chuẩn | Trọng tâm | Module demo |
+|---|---:|---:|---:|---|---|
+| WS-01 — Nền tảng và bản đồ khái niệm | TV1 | TV4 | 1–8 | Taxonomy, workload, scheduling, process/thread/coroutine | Data contract và sequential baseline |
+| WS-02 — Future, Executor và ThreadPool | TV2 | TV5 | 9–16 | Future lifecycle, API semantics, error/cancel/deadlock | Blocking adapter và thread mode |
+| WS-03 — ProcessPool, GIL và hiệu năng | TV3 | TV6 | 17–24 | Isolation, pickling/IPC, platform, benchmark | CPU stage và process mode |
+| WS-04 — Event loop, coroutine và Task | TV4 | TV1 | 25–32 | Runtime model, orchestration, structured concurrency | Async adapter và async mode |
+| WS-05 — Điều phối, lỗi và độ tin cậy | TV5 | TV2 | 33–40 | Timeout, cancellation, primitives, Queue, shutdown | Backpressure và failure policy |
+| WS-06 — Kiến trúc lai và quyết định | TV6 | TV3 | 41–48 | Decision tree, hybrid, resource budget, distributed boundary | Hybrid mode và integration contract |
 
-## Nguồn chính
+Owner chịu trách nhiệm chiều sâu và độ chính xác. Backup review, chạy lại bằng chứng và trình bày thay được. Bốn thành viên còn lại vẫn phải đạt toàn bộ 40 năng lực chung.
 
-- Tài liệu Chương 4 do giảng viên cung cấp — chỉ dùng để mapping nội bộ, không đăng lại PDF nếu chưa được phép.
-- [`asyncio` — Python documentation](https://docs.python.org/3/library/asyncio.html)
-- [Coroutines and Tasks](https://docs.python.org/3/library/asyncio-task.html)
-- [Runners](https://docs.python.org/3/library/asyncio-runner.html)
-- [Synchronization Primitives](https://docs.python.org/3/library/asyncio-sync.html)
-- [Queues](https://docs.python.org/3/library/asyncio-queue.html)
-- [Developing with asyncio](https://docs.python.org/3/library/asyncio-dev.html)
-- [`concurrent.futures`](https://docs.python.org/3/library/concurrent.futures.html)
-- [`threading`](https://docs.python.org/3/library/threading.html)
-- [`multiprocessing`](https://docs.python.org/3/library/multiprocessing.html)
-- [PEP 492 — Coroutines with async and await syntax](https://peps.python.org/pep-0492/)
-- [PEP 654 — Exception Groups and `except*`](https://peps.python.org/pep-0654/)
+## 4. Baseline khối lượng đồng đều
 
-Danh mục đầy đủ 33 nguồn primary nằm cuối bản đồ A–Z.
+| Gói việc/người | Điểm | Giờ dự kiến | Bằng chứng |
+|---|---:|---:|---|
+| Phạm vi và prerequisite | 8 | 4 | Requirement map và prerequisite map |
+| Nghiên cứu chuyên sâu | 20 | 10 | 4.500–5.500 từ, tối thiểu 5 nguồn |
+| Sơ đồ, bảng và ví dụ | 12 | 6 | 3 tài sản, 2 ví dụ đúng, 2 phản ví dụ |
+| Slide và kịch bản nói | 15 | 7 | 8 slide chuẩn, mapping 6 slide rút gọn, 3 phụ lục |
+| Demo và kiểm thử | 15 | 7 | 1 module, 6 loại test, 1 fault, 1 metric |
+| Câu hỏi và teach-back | 10 | 5 | 20 câu có đáp án, teach-back 30 phút |
+| Review và backup | 10 | 5 | 2 PR review, backup rehearsal |
+| GitHub và rehearsal | 10 | 4 | Issue, branch, commit, PR, timing và workload log |
+| **Tổng/người** | **100** | **48** | **8 work package hoàn chỉnh** |
 
-## Nguyên tắc bản quyền và chất lượng
+Workload được cập nhật theo ngày trong D06. Chênh lệch dự kiến trên 5% phải có lý do; chênh lệch thực tế trên 10% kích hoạt tái phân bổ task độc lập.
 
-Repository công khai chỉ lưu nội dung nhóm tự xây dựng và liên kết nguồn. Không đăng lại nguyên PDF/slide của giảng viên khi chưa có quyền. Các ví dụ phải được nhóm tự chạy và tự giải thích; không sao chép một đoạn mã mà không hiểu semantics, lỗi, giới hạn và phiên bản.
+## 5. Chuẩn kiến thức chung
+
+Mỗi thành viên phải đạt bốn mức năng lực:
+
+1. **Nhận biết:** định nghĩa đúng và phân biệt được các khái niệm gần nhau.
+2. **Giải thích:** tự vẽ timeline, state diagram và luồng điều khiển.
+3. **Áp dụng:** đọc, chạy, dự đoán và sửa được ví dụ.
+4. **Phân tích:** chọn mô hình, nêu trade-off, giới hạn và phản biện kết quả.
+
+Điều kiện tối thiểu:
+
+- quiz chung từ 85%; không cụm Core nào dưới 70%;
+- trả lời được câu ngẫu nhiên ngoài workstream chính;
+- trình bày thay được phần của backup pair;
+- chạy và giải thích được cả năm mode demo;
+- sửa được ít nhất một fault ngoài module sở hữu;
+- bảo vệ được nguồn, phiên bản và giới hạn của mọi claim chính.
+
+## 6. Kiến trúc trình bày
+
+| Cấu hình | Quy mô | Thời lượng nội dung | Demo và Q&A | Phạm vi sử dụng |
+|---|---:|---:|---:|---|
+| Rút gọn | 36 slide, 6/người | 30–36 phút | 16–20 phút | Thời lượng lớp hạn chế |
+| Chuẩn | 48 slide, 8/người | 48–55 phút | 18–20 phút | Trình bày đầy đủ mạch Core và Applied |
+| Phụ lục | 18 slide, 3/người | Theo Q&A | Không tính vào mạch chính | API matrix, version caveat, phản ví dụ và câu khó |
+
+Mỗi slide có một thông điệp chính, một bằng chứng trực quan và speaker notes. Chi tiết dài nằm trong D02, speaker notes hoặc phụ lục; không đưa nguyên đoạn văn lên mặt slide.
+
+## 7. Demo kiểm chứng
+
+### Bài toán
+
+Trung tâm thu thập dữ liệu từ nhiều trạm cảm biến có độ trễ và lỗi khác nhau, sau đó kiểm tra dữ liệu, thực hiện bước phân tích CPU và tổng hợp cảnh báo.
+
+```text
+Trạm cảm biến
+  → lấy dữ liệu có độ trễ/lỗi
+  → giới hạn số thao tác đang bay
+  → bounded Queue tạo backpressure
+  → kiểm tra và làm sạch
+  → phân tích CPU
+  → tổng hợp cảnh báo
+  → metric và báo cáo
+```
+
+### Năm chế độ thực thi
+
+| Mode | Mục đích |
+|---|---|
+| `sequential` | Oracle tính đúng và baseline |
+| `thread` | Bao bọc blocking I/O bằng `ThreadPoolExecutor` |
+| `process` | Thực hiện CPU-bound đủ lớn bằng `ProcessPoolExecutor` |
+| `async` | Chồng thời gian chờ I/O bằng coroutine và Task |
+| `hybrid` | `asyncio` cho I/O kết hợp process pool cho CPU |
+
+Demo phải dùng cùng input/seed, kiểm tra output trước benchmark, chạy offline và lưu raw result. Kết luận hiệu năng phải gắn với cấu hình, workload và giới hạn phép đo.
+
+## 8. Milestone và trạng thái
+
+| Milestone | Sản phẩm | Trạng thái khởi tạo |
+|---|---|---|
+| MS-01 — Project charter | D01 và requirement matrix | Hoàn chỉnh cấu trúc |
+| MS-02 — Knowledge baseline | D02 và source/version matrix | Hoàn chỉnh cấu trúc |
+| MS-03 — Work allocation | D03 và WBS D06 | Hoàn chỉnh cấu trúc |
+| MS-04 — Learning validation | D04, quiz, lab và oral records | Chờ gán thành viên |
+| MS-05 — Demo specification | D05, interface và test matrix | Hoàn chỉnh đặc tả |
+| MS-06 — Content freeze | Sáu hồ sơ chuyên môn và review | Chờ thực hiện |
+| MS-07 — Production | Code demo, PPTX/PDF và notes | Ngoài release hiện tại |
+| MS-08 — Rehearsal/release | Timing, fallback, Q&A và tag | Chờ MS-07 |
+
+## 9. Quy trình GitHub
+
+```text
+Requirement
+  → Work package
+  → GitHub Issue
+  → Branch tvN/ten-cong-viec
+  → Commit nhỏ có ý nghĩa
+  → Pull Request theo template
+  → Backup review + review chéo chuyên môn
+  → Rework
+  → Merge
+  → Cập nhật traceability và workload
+```
+
+Quy tắc bắt buộc:
+
+- không sửa trực tiếp `main` trong giai đoạn nhóm thực hiện;
+- mỗi PR liên kết Work Package ID và Requirement ID;
+- claim kỹ thuật có nguồn, phiên bản và cách kiểm chứng;
+- claim hiệu năng có input, môi trường, tham số, raw result và oracle;
+- quyết định thay đổi phạm vi được ghi trong Issue;
+- tài liệu nguồn chưa được phép công khai không được commit vào repository.
+
+Mẫu thao tác nằm tại:
+
+- [Issue template](.github/ISSUE_TEMPLATE/cong-viec-thanh-vien.md)
+- [Pull Request template](.github/pull_request_template.md)
+
+## 10. Điểm bắt đầu cho nhóm
+
+1. Điền họ tên và MSSV vào TV1–TV6.
+2. Xác nhận owner/backup theo WS-01…WS-06.
+3. Chốt thời lượng báo cáo và phiên bản Python mục tiêu.
+4. Tạo một Issue cho từng work package trong D06.
+5. Thực hiện D−14 đến D−11: diagnostic, scope, source và hồ sơ chuyên môn.
+6. Chỉ mở công việc PPTX/PDF hoặc code demo sau khi gate tương ứng được phê duyệt.
+
+## 11. Nguồn và chuẩn chất lượng
+
+Nguồn ưu tiên:
+
+1. Tài liệu Chương 4 do giảng viên cung cấp để xác định phạm vi.
+2. Python Language Reference, Standard Library documentation và PEP.
+3. Tài liệu chính thức của dependency nếu demo sử dụng thư viện ngoài.
+4. Tài liệu học thuật bổ trợ cho mô hình, benchmark và hệ thống phân tán.
+
+Repository công khai chỉ chứa nội dung do nhóm xây dựng và liên kết nguồn. Mọi ví dụ phải được chạy, giải thích và kiểm tra giới hạn; không sao chép nguyên khối slide, mã hoặc tài liệu không có quyền phân phối.

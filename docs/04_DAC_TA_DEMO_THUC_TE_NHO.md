@@ -1,12 +1,17 @@
 # ĐẶC TẢ DEMO THỰC TẾ NHỎ CHO CHƯƠNG 4
 
-> Trạng thái: **đặc tả để duyệt**, chưa phải mã nguồn và chưa phải PowerPoint. Nhóm chỉ bắt đầu cài đặt sau khi giảng viên/nhóm chốt sườn, phiên bản Python và thời lượng báo cáo.
+| Thuộc tính | Giá trị |
+|---|---|
+| Vai trò | System/demo specification và verification plan |
+| Trạng thái | Chờ phê duyệt triển khai |
+| Điều kiện triển khai | Khóa phạm vi, Python baseline, interface contract và thời lượng báo cáo |
+| Sản phẩm giai đoạn sau | Mã nguồn, test, raw benchmark và runbook |
 
-## 1. Tên và câu hỏi trung tâm
+## 1. Mục tiêu kiểm chứng
 
-**Tên đề xuất:** Trung tâm thu thập và phân tích dữ liệu từ nhiều trạm cảm biến.
+**Tên hệ thống:** Trung tâm thu thập và phân tích dữ liệu từ nhiều trạm cảm biến.
 
-**Câu hỏi trung tâm:** Nếu phải lấy dữ liệu từ nhiều nguồn có độ trễ, xử lý lỗi, kiểm soát số thao tác đồng thời và thực hiện thêm một bước tính toán CPU, ta nên dùng tuần tự, thread, process, `asyncio` hay mô hình lai?
+**Bài toán quyết định:** lựa chọn giữa tuần tự, thread, process, `asyncio` và mô hình lai cho pipeline có I/O trễ, lỗi, giới hạn đồng thời và bước tính toán CPU.
 
 Demo không nhằm xây một hệ thống IoT hoàn chỉnh. Nó là một “phòng thí nghiệm thu nhỏ” để quan sát đúng những hiện tượng của Chương 4:
 
@@ -19,9 +24,9 @@ Demo không nhằm xây một hệ thống IoT hoàn chỉnh. Nó là một “p
 - CPU-bound và chi phí ProcessPool;
 - kiểm tra tính đúng trước khi so hiệu năng.
 
-## 2. Demo phải chứng minh gì và không được suy diễn gì
+## 2. Phạm vi bằng chứng
 
-### 2.1. Những điều có thể chứng minh
+### 2.1. Kết luận được phép rút ra
 
 1. Khi nhiều thao tác độc lập chủ yếu chờ I/O, phiên bản concurrent có thể giảm tổng thời gian chờ so với tuần tự.
 2. ThreadPool có thể bao bọc API I/O blocking mà không cần viết lại toàn bộ sang async.
@@ -32,7 +37,7 @@ Demo không nhằm xây một hệ thống IoT hoàn chỉnh. Nó là một “p
 7. ProcessPool có thể hữu ích cho CPU-bound đủ lớn, nhưng overhead có thể khiến tác vụ nhỏ chậm hơn tuần tự.
 8. Kết quả benchmark phụ thuộc cấu hình, dữ liệu, máy và phương pháp đo.
 
-### 2.2. Những điều demo không chứng minh
+### 2.2. Giới hạn suy diễn
 
 1. Không chứng minh `asyncio` luôn nhanh nhất.
 2. Không chứng minh thread luôn là lựa chọn tốt nhất cho mọi I/O.
@@ -117,7 +122,7 @@ Từng trạm độc lập ở bước lấy dữ liệu, vì vậy phù hợp �
 
 Phân công cụ thể cuối cùng phải khớp với `02_PHAN_CONG_6_THANH_VIEN_A_Z.md`; bảng này mô tả ownership theo chủ đề, không giao toàn bộ demo cho một người.
 
-## 6. Mô hình dữ liệu đề xuất
+## 6. Mô hình dữ liệu
 
 ### 6.1. Cấu hình trạm
 
@@ -580,7 +585,7 @@ Mọi thành viên phải:
 
 Khối lượng demo được tính 15/100 điểm và khoảng 7/48 giờ cho từng người như nhau. Nếu một module vượt định mức vì phát sinh kỹ thuật, tách phần độc lập thành issue chung và giao cho người còn tải; không mặc định dồn cho TV6.
 
-## 18. Cấu trúc thư mục dự kiến — chưa tạo ở giai đoạn sườn
+## 18. Cấu trúc thư mục triển khai
 
 ```text
 demo/
@@ -612,7 +617,7 @@ demo/
 
 Tên file có thể thay đổi khi cài đặt; trách nhiệm và test oracle không được mất.
 
-## 19. Checklist nghiệm thu đặc tả trước khi viết code
+## 19. Cổng phê duyệt triển khai
 
 - [ ] Giảng viên/nhóm chấp nhận bài toán cảm biến.
 - [ ] Chốt phiên bản Python mục tiêu.
@@ -626,7 +631,7 @@ Tên file có thể thay đổi khi cài đặt; trách nhiệm và test oracle 
 - [ ] Chốt phương án offline và dữ liệu dự phòng.
 - [ ] Không bắt đầu tối ưu khi correctness tests chưa có.
 
-## 20. Definition of Done của demo sau này
+## 20. Tiêu chí hoàn thành demo
 
 Demo chỉ được xem là hoàn tất nếu:
 

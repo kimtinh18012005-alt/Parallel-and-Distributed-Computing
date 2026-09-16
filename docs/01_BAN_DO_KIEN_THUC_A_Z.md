@@ -1,14 +1,18 @@
 # BẢN ĐỒ KIẾN THỨC A–Z — CHƯƠNG 4: PHƯƠNG PHÁP TÍNH TOÁN BẤT ĐỒNG BỘ TRONG PYTHON
 
-> Tài liệu kiểm soát phạm vi kiến thức cho nhóm 6 thành viên. Đây là **sườn học thuật và chuẩn đầu ra**, không phải nội dung PowerPoint hoàn chỉnh.
->
-> Mốc đối chiếu kỹ thuật: tài liệu chính thức **Python 3.14.7**, kiểm tra ngày **15/09/2026**. Những API chỉ xuất hiện ở phiên bản mới đều được gắn nhãn phiên bản; không được trình bày chúng như thể có trên mọi bản Python.
+| Thuộc tính | Giá trị |
+|---|---|
+| Vai trò | Knowledge baseline và chuẩn đầu ra kỹ thuật |
+| Đối tượng | 6 thành viên và reviewer chuyên môn |
+| Phân tầng | Core, Applied, Advanced |
+| Mốc kỹ thuật | Python 3.14.7; đối chiếu ngày 15/09/2026 |
+| Quy tắc phiên bản | API mới phải gắn nhãn phiên bản và không được suy rộng sang mọi bản Python |
 
 ---
 
 ## 1. Tuyên bố phạm vi và mục tiêu
 
-Chương 4 không được hiểu đơn giản là “học vài hàm `asyncio`”. Để thật sự nắm phương pháp tính toán bất đồng bộ từ A đến Z, cả nhóm phải hiểu được bốn lớp vấn đề liên kết với nhau:
+Phạm vi Chương 4 được tổ chức thành bốn lớp vấn đề liên kết:
 
 1. **Mô hình tư duy:** tuần tự, đồng thời, song song, bất đồng bộ, blocking, non-blocking, I/O-bound, CPU-bound khác nhau như thế nào.
 2. **Cơ chế thực thi:** coroutine, awaitable, Task, Future, event loop và Executor hoạt động ra sao; lúc nào công việc bắt đầu, tạm dừng, tiếp tục, hoàn thành, lỗi hoặc bị hủy.
@@ -17,7 +21,7 @@ Chương 4 không được hiểu đơn giản là “học vài hàm `asyncio`�
 
 Chuẩn đầu ra của nhóm là: **mỗi thành viên đều giải thích được toàn bộ đường đi của một tác vụ bất đồng bộ**, từ lúc tạo coroutine đến lúc có kết quả hoặc bị hủy; đồng thời mỗi người có một cụm chuyên môn riêng để đào sâu và phản biện.
 
-### 1.1. Điều tài liệu này cam kết bao phủ
+### 1.1. Phạm vi bao phủ
 
 - Nội dung cốt lõi thường có trong Chương 4: khái niệm bất đồng bộ, `concurrent.futures`, `Executor`, `Future`, `ThreadPoolExecutor`, `ProcessPoolExecutor`, event loop, coroutine, Task và `asyncio`.
 - Nền tảng bắt buộc để không học thuộc lòng: blocking/non-blocking, I/O-bound/CPU-bound, scheduling hợp tác, vòng đời Task/Future và GIL.
@@ -25,7 +29,7 @@ Chuẩn đầu ra của nhóm là: **mỗi thành viên đều giải thích đ�
 - Phần mở rộng có giá trị học thuật: structured concurrency với `TaskGroup`, `ExceptionGroup`, `async with`, `async for`, async generator, streams, subprocess, `contextvars`, bridge giữa event loop và thread/process/interpreter.
 - Phần đảm bảo chất lượng: đo hiệu năng, kiểm thử, debug, logging, introspection, graceful shutdown và các bẫy thường gặp.
 
-### 1.2. Điều không được đánh đồng
+### 1.2. Ranh giới khái niệm
 
 - **Bất đồng bộ không đồng nghĩa song song.** Một event loop thông thường có thể quản lý nhiều Task đồng thời nhưng tại một thời điểm chỉ chạy mã Python của một Task trên thread của loop.
 - **Đồng thời không bảo đảm nhanh hơn.** Nó thường tăng khả năng tận dụng thời gian chờ và throughput cho I/O; một tác vụ đơn lẻ không nhất thiết hoàn thành nhanh hơn.
@@ -2010,10 +2014,12 @@ Chỉ dùng nguồn dưới đây làm chuẩn cho semantics kỹ thuật. Blog/
 
 ---
 
-## 32. Tóm tắt một trang để tự kiểm tra
+## 32. Tóm lược kỹ thuật chuẩn
 
-Một thành viên thật sự hiểu Chương 4 phải kể được chuỗi sau:
+Tính toán bất đồng bộ chủ yếu giảm thời gian lãng phí trong lúc chờ I/O. Lời gọi `async def` tạo coroutine object; event loop chạy coroutine khi đối tượng được await hoặc được lập lịch thành Task. Cooperative scheduling yêu cầu Task nhường quyền tại điểm await, vì vậy lệnh blocking đồng bộ hoặc phép tính CPU dài sẽ chặn loop.
 
-> Chúng ta dùng bất đồng bộ chủ yếu để không lãng phí thread trong lúc chờ I/O. Trong `asyncio`, gọi `async def` tạo coroutine object; event loop chỉ chạy nó khi được await hoặc schedule thành Task. Loop dùng cooperative scheduling: Task nhường ở điểm await, vì vậy blocking sync hoặc CPU dài sẽ chặn cả loop. Nhiều việc độc lập có thể được tổ chức bằng Task/`gather`, nhưng `TaskGroup` cho structured concurrency và fail-fast rõ hơn. Future biểu diễn kết quả tương lai, nhưng `asyncio.Future` khác Future của `concurrent.futures`. Cancellation là yêu cầu hợp tác thông qua `CancelledError`, nên cleanup phải nằm trong `finally`; timeout được xây trên cancellation và không phải nút cưỡng bức dừng mọi worker. Shared state qua các điểm await vẫn có race, nên dùng Lock/primitive đúng; tải phải được giới hạn bằng Semaphore, bounded Queue hoặc buffer để có backpressure. Blocking I/O cũ có thể đưa sang thread; pure-Python CPU-bound thường đưa sang process trên CPython có GIL. Chương trình đúng phải xử lý lỗi, pending task, shutdown và đóng tài nguyên; chương trình tốt còn được benchmark công bằng, test cả failure/cancel và quan sát bằng debug/log/introspection. Mọi API mới phải ghi phiên bản.
+Các công việc độc lập có thể được tổ chức bằng Task, `gather` hoặc `TaskGroup`; structured concurrency làm rõ lifetime và failure propagation. Future đại diện cho kết quả sẽ có, nhưng `asyncio.Future` và `concurrent.futures.Future` thuộc hai mô hình khác nhau. Cancellation là giao thức hợp tác qua `CancelledError`; cleanup phải nằm trong `finally`, còn timeout không phải nút cưỡng bức dừng mọi worker.
 
-Nếu 6/6 thành viên có thể giải thích, minh họa và phản biện toàn bộ đoạn trên cùng các checklist chi tiết, nhóm mới có cơ sở tuyên bố đã nắm phương pháp tính toán bất đồng bộ từ A đến Z.
+Shared state vẫn có thể race qua các điểm await. Tải phải được giới hạn bằng Semaphore, bounded Queue hoặc flow-control buffer. Blocking I/O có thể chuyển sang thread; pure-Python CPU-bound thường được đánh giá với process trên CPython có GIL. Một chương trình hoàn chỉnh phải xử lý lỗi, pending task, shutdown và đóng tài nguyên; mọi kết luận hiệu năng phải dựa trên benchmark, test và observability có kiểm soát.
+
+Chuẩn hoàn thành yêu cầu 6/6 thành viên giải thích, minh họa và phản biện được toàn bộ chuỗi kỹ thuật trên cùng các checklist chi tiết.

@@ -1,15 +1,17 @@
 # PHÂN CÔNG 6 THÀNH VIÊN — CHƯƠNG 4 TỪ A ĐẾN Z
 
-> **Chủ đề:** Phương pháp tính toán bất đồng bộ trong môn Tính toán song song và phân tán
-> **Loại tài liệu:** Sườn nội dung, kế hoạch học và phân công; chưa phải PowerPoint
-> **Ba cấu hình:** 36 slide rút gọn, 48 slide chuẩn, 18 slide phụ lục
-> **Nguyên tắc cốt lõi:** Phân công thuyết trình theo chuyên môn, nhưng cả sáu thành viên phải học và bảo vệ được toàn bộ Chương 4.
+| Thuộc tính | Giá trị |
+|---|---|
+| Chủ đề | Phương pháp tính toán bất đồng bộ |
+| Vai trò | Work allocation, slide architecture và acceptance criteria |
+| Cấu hình | 36 slide rút gọn, 48 slide chuẩn, 18 slide phụ lục |
+| Nguyên tắc | Chuyên môn hóa theo workstream; kiến thức Core bắt buộc với cả sáu |
 
 ---
 
 ## 1. Mục tiêu của bản phân công
 
-Bản phân công này không chia Chương 4 thành sáu mảnh rời để mỗi người chỉ học tám slide của mình. Nhóm làm việc theo ba tầng:
+Cấu trúc trách nhiệm gồm ba tầng:
 
 1. **Kiến thức chung:** cả sáu người học, chạy thử, giải thích và làm bài kiểm tra về toàn bộ chương.
 2. **Chuyên môn chính:** mỗi người sở hữu một cụm kiến thức liền mạch, nghiên cứu sâu, viết nội dung và chịu trách nhiệm độ chính xác.
@@ -175,7 +177,7 @@ Chuyên môn của sáu người khác nhau, nhưng **khối lượng bắt bu�
 | Slide chuẩn/rút gọn/phụ lục | 8 / 6 / 3 slide | Slide có thông điệp, minh họa, lời giải thích và câu chuyển |
 | Thời lượng thuyết trình | 8–9 phút ở bản 48 slide; 5–6 phút ở bản 36 slide | Rehearsal lệch không quá 30 giây so với phần được giao |
 | Tài sản học tập | 3 sơ đồ/bảng và 4 ví dụ: 2 đúng, 2 phản ví dụ | Người khác dùng tài sản đó để giải thích lại được cơ chế |
-| Demo | 1 module/stage, 6 test case, 1 fault injection, 1 metric | Có đặc tả giao diện, expected result và checklist tích hợp; giai đoạn này chưa viết code |
+| Demo | 1 module/stage, 6 test case, 1 fault injection, 1 metric | Có đặc tả giao diện, expected result và checklist tích hợp; triển khai code sau Gate G5 |
 | Ngân hàng câu hỏi | 12 trắc nghiệm, 6 tự luận ngắn, 2 bài debug/thiết kế | Có đáp án, giải thích vì sao đúng/sai và mức độ câu hỏi |
 | Dạy chéo | 1 buổi teach-back 30 phút | Bốn người không phải owner đặt được ít nhất 1 câu hỏi/người |
 | Review và backup | Review 1 cụm, 5 mục review bắt buộc, trình bày thay 1 lần | Biên bản review, lỗi đã sửa và video/phiếu rehearsal |
@@ -270,7 +272,7 @@ Trạm cảm biến
 - Giới hạn Semaphore và kích thước Queue.
 - Độ nặng bước CPU.
 
-### 6.4. Điều kiện nghiệm thu demo sau này
+### 6.4. Điều kiện nghiệm thu demo
 
 - Cùng input cho kết quả nghiệp vụ tương đương ở năm mode.
 - Có correctness test trước benchmark.
@@ -295,7 +297,7 @@ Trạm cảm biến
 
 Mỗi người, bất kể module nào, phải nộp cùng sáu loại test: 1 happy path, 1 boundary, 1 failure, 1 timeout/cancellation, 1 resource/cleanup và 1 integration test. Mỗi người còn phải review module của backup pair, tự chạy toàn bộ năm mode ít nhất một lần và ký checklist kết quả. Nhờ vậy “tích hợp” là hoạt động của sáu owner, không phải phần việc vô hạn của TV6.
 
-Tài liệu này chỉ phân công và đặc tả. Không tạo code demo, PPTX hoặc PDF ở giai đoạn này.
+Phạm vi phát hành hiện tại gồm phân công và đặc tả; code demo, PPTX và PDF thuộc giai đoạn sản xuất sau cổng phê duyệt.
 
 ---
 
@@ -432,9 +434,9 @@ Không xóa ma trận thuật ngữ, correctness check hoặc overhead; chuyển
 - Định nghĩa data contract và tiêu chí đúng.
 - Thiết kế sequential baseline và fixed seed.
 - Chuẩn hóa input/output để mọi mode so được.
-- Viết đặc tả timeline baseline; chưa viết code ở giai đoạn này.
+- Viết đặc tả timeline baseline; code thuộc work package triển khai sau Gate G5.
 
-### 7.7. Deliverables
+### 7.7. Sản phẩm bàn giao
 
 - Hồ sơ chuyên sâu 4.500–5.500 từ về nền tảng, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
 - Đúng 3 tài sản chính: ma trận thuật ngữ, timeline so sánh và sơ đồ process/thread/coroutine; kèm 2 ví dụ đúng, 2 phản ví dụ.
@@ -458,7 +460,7 @@ Không xóa ma trận thuật ngữ, correctness check hoặc overhead; chuyển
 9. Vì sao kiểm tra cùng kết quả trước benchmark?
 10. Async trên một máy có phải distributed không?
 
-### 7.9. Tiêu chí đạt, GitHub role và backup
+### 7.9. Tiêu chí đạt, vai trò GitHub và backup
 
 TV1 đạt khi vẽ lại timeline không nhìn tài liệu, phân loại đúng tình huống, bảo vệ benchmark baseline, trình bày thay TV4 và được TV4 xác nhận thuật ngữ nhất quán.
 
@@ -599,7 +601,7 @@ TV2 giải thích abstraction cấp cao của concurrent.futures và cách dùng
 - Xác định đường success, exception, timeout và cancellation.
 - Thiết kế test một trạm lỗi không làm mất kết quả trạm khác.
 
-### 8.7. Deliverables
+### 8.7. Sản phẩm bàn giao
 
 - Hồ sơ chuyên sâu 4.500–5.500 từ về Future/Executor/ThreadPool, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
 - Đúng 3 tài sản chính: state diagram, API table và collection-order timeline; kèm 2 ví dụ đúng, 2 phản ví dụ.
@@ -623,7 +625,7 @@ TV2 giải thích abstraction cấp cao của concurrent.futures và cách dùng
 9. Hai kiểu deadlock Future là gì?
 10. Context manager bảo đảm và không bảo đảm điều gì?
 
-### 8.9. Tiêu chí đạt, GitHub role và backup
+### 8.9. Tiêu chí đạt, vai trò GitHub và backup
 
 TV2 đạt khi vẽ state machine, dự đoán đúng ordering/exception, phát hiện deadlock, bảo vệ lifecycle và trình bày thay TV5.
 
@@ -764,7 +766,7 @@ TV3 giúp nhóm hiểu vì sao process có thể khai thác nhiều core cho pur
 - Thiết kế worker/task-size sweep.
 - Chuẩn hóa benchmark metadata và correctness digest.
 
-### 9.7. Deliverables
+### 9.7. Sản phẩm bàn giao
 
 - Hồ sơ chuyên sâu 4.500–5.500 từ về ProcessPool/GIL/benchmark, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
 - Đúng 3 tài sản chính: sơ đồ IPC, bảng pickling và benchmark chart; kèm 2 ví dụ đúng, 2 phản ví dụ.
@@ -788,7 +790,7 @@ TV3 giúp nhóm hiểu vì sao process có thể khai thác nhiều core cho pur
 9. Speedup và efficiency khác nhau thế nào?
 10. Tại sao benchmark phải ghi interpreter/version/platform?
 
-### 9.9. Tiêu chí đạt, GitHub role và backup
+### 9.9. Tiêu chí đạt, vai trò GitHub và backup
 
 TV3 đạt khi giải thích GIL có điều kiện, sửa được lỗi pickle/main guard, thiết kế benchmark công bằng, giải thích điểm bão hòa và trình bày thay TV6.
 
@@ -932,7 +934,7 @@ TV4 phải:
 - Chuẩn bị phản ví dụ time.sleep/CPU trong loop và cách sửa.
 - Xác định cách bridge CPU stage sang ProcessPool.
 
-### 10.7. Deliverables
+### 10.7. Sản phẩm bàn giao
 
 - Hồ sơ chuyên sâu 4.500–5.500 từ về event loop/coroutine/Task, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
 - Đúng 3 tài sản chính: event-loop diagram, scheduling trace và type comparison; kèm 2 ví dụ đúng, 2 phản ví dụ.
@@ -956,7 +958,7 @@ TV4 phải:
 9. Khi nào dùng async generator?
 10. Tại sao CPU-heavy code làm loop mất phản hồi?
 
-### 10.9. Tiêu chí đạt, GitHub role và backup
+### 10.9. Tiêu chí đạt, vai trò GitHub và backup
 
 TV4 đạt khi vẽ event-loop trace, dự đoán output order, phân biệt đúng type, sửa block-loop anti-pattern, bảo vệ TaskGroup và trình bày thay TV1.
 
@@ -1099,7 +1101,7 @@ TV5 biến chương trình “chạy được khi mọi thứ tốt” thành ch
 - Cancellation toàn pipeline và graceful shutdown.
 - Failure-injection matrix và expected behavior.
 
-### 11.7. Deliverables
+### 11.7. Sản phẩm bàn giao
 
 - Hồ sơ chuyên sâu 4.500–5.500 từ về reliability/coordination, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
 - Đúng 3 tài sản chính: primitive table, cancellation state diagram và shutdown sequence; kèm 2 ví dụ đúng, 2 phản ví dụ.
@@ -1123,7 +1125,7 @@ TV5 biến chương trình “chạy được khi mọi thứ tốt” thành ch
 9. Retry khi nào làm tình hình xấu hơn?
 10. Idempotency liên quan retry thế nào?
 
-### 11.9. Tiêu chí đạt, GitHub role và backup
+### 11.9. Tiêu chí đạt, vai trò GitHub và backup
 
 TV5 đạt khi dự đoán propagation, sửa race, chọn đúng primitive, thiết kế shutdown/failure policy, trình bày thay TV2 và chứng minh không có orphan task trong thiết kế.
 
@@ -1218,7 +1220,7 @@ TV6 kết nối các mảnh thành một quy trình ra quyết định và demo 
 
 - **Thông điệp:** Phân loại workload, chọn abstraction phù hợp, bảo vệ correctness/reliability và đo trên dữ liệu thật.
 - **Nội dung:** Tóm tắt bốn nguyên tắc; năm mode demo; kết quả học; giới hạn; đường dẫn tài liệu GitHub; mời câu hỏi.
-- **Minh họa/code/diagram:** Bản đồ từ vấn đề → công cụ → an toàn → đo lường; QR/link repo sau này.
+- **Minh họa/code/diagram:** Bản đồ từ vấn đề → công cụ → an toàn → đo lường; QR/link release repository.
 - **Lời giải thích:** Không chỉ liệt kê. Quay lại câu hỏi slide 1 và trả lời bằng decision framework. Trong demo, mỗi thành viên giải thích stage mình sở hữu.
 - **Câu hỏi chuyển:** “Với một workload mới, bước đầu tiên bạn sẽ đo hoặc hỏi điều gì?”
 
@@ -1264,7 +1266,7 @@ TV6 kết nối các mảnh thành một quy trình ra quyết định và demo 
 - Thiết kế hybrid diagram và shutdown order.
 - Điều phối phần trình diễn để mỗi người giải thích stage của mình.
 
-### 12.7. Deliverables
+### 12.7. Sản phẩm bàn giao
 
 - Hồ sơ chuyên sâu 4.500–5.500 từ về decision/hybrid/distributed, kèm ít nhất 5 nguồn chính thức/học thuật và bảng claim–nguồn.
 - Đúng 3 tài sản chính: decision tree, hybrid architecture và resource-budget matrix; kèm 2 ví dụ đúng, 2 phản ví dụ.
@@ -1288,7 +1290,7 @@ TV6 kết nối các mảnh thành một quy trình ra quyết định và demo 
 9. Tại sao không được bịa speedup trước khi đo?
 10. Nếu demo lỗi, bằng chứng dự phòng nào vẫn chứng minh kết luận?
 
-### 12.9. Tiêu chí đạt, GitHub role và backup
+### 12.9. Tiêu chí đạt, vai trò GitHub và backup
 
 TV6 đạt khi dùng decision tree cho tình huống mới, giải thích hybrid/shutdown/resource budget, phân biệt async–distributed, bảo vệ benchmark report và trình bày thay TV3.
 
@@ -1436,7 +1438,7 @@ Toàn Chương 4 là một Epic. Mỗi thành viên có đúng một tracking Is
 - Nếu một PR chạm nhiều miền, chỉ định một reviewer chính và ghi câu hỏi cho owner miền khác trong Issue; không tự động dồn nhiều lượt review cho một người.
 - Lỗi nghiêm trọng phát hiện ngoài năm mục vẫn phải ghi thành Issue; phần sửa phát sinh được cộng vào workload và tái phân bổ nếu vượt ngưỡng.
 
-### 15.3. Definition of Ready cho PR
+### 15.3. Điều kiện mở Pull Request
 
 PR chỉ mở review khi:
 
@@ -1456,7 +1458,7 @@ PR chỉ mở review khi:
 |---|---|---|
 | D−14 | Diagnostic, đọc file gốc, chốt scope | Coverage map và danh sách lỗ hổng |
 | D−13 đến D−11 | Nghiên cứu chuyên môn, tìm nguồn | Source log và outline cấp mục |
-| D−10 | Hồ sơ chuyên môn v1 | Sáu tài liệu module |
+| D−10 | Hồ sơ chuyên môn — bản review 1 | Sáu tài liệu module |
 | D−9 | Reviewer pass 1 | Comment kỹ thuật và danh sách sửa |
 | D−8 | Teach-back TV1–TV3 | Tóm tắt của sáu người |
 | D−7 | Teach-back TV4–TV6 | Tóm tắt của sáu người |
@@ -1517,7 +1519,7 @@ Nếu có nhiều thời gian hơn, giữ nguyên thứ tự và kéo dài giai 
 
 ---
 
-## 18. Definition of Done từng thành viên
+## 18. Tiêu chí hoàn thành từng thành viên
 
 Một thành viên chỉ được đánh dấu hoàn thành khi có đủ:
 
@@ -1541,7 +1543,7 @@ Một thành viên chỉ được đánh dấu hoàn thành khi có đủ:
 
 ---
 
-## 19. Definition of Done toàn nhóm
+## 19. Tiêu chí hoàn thành toàn nhóm
 
 Báo cáo chỉ hoàn thành khi:
 
@@ -1562,7 +1564,7 @@ Báo cáo chỉ hoàn thành khi:
 15. Mỗi module có chuyên gia và backup.
 16. Cả sáu vượt chuẩn kiến thức chung.
 17. Có bản 36, 48 và 18 phụ lục ở mức outline.
-18. Có runbook và fallback cho demo sau này.
+18. Có runbook và fallback cho demo.
 19. Không upload tài liệu giảng viên nếu chưa có quyền.
 20. Chỉ tạo PPTX/PDF/code sau khi sườn này được nhóm duyệt.
 
@@ -1649,7 +1651,7 @@ Không sao chép nguyên slide của nguồn. Có thể học cấu trúc, nhưn
 
 ---
 
-## 23. Kết luận phân công
+## 23. Tổng hợp trách nhiệm
 
 Mô hình này tạo sáu chuyên gia nhưng không tạo sáu “ốc đảo kiến thức”:
 
@@ -1662,4 +1664,4 @@ Mô hình này tạo sáu chuyên gia nhưng không tạo sáu “ốc đảo ki
 
 Các cặp TV1↔TV4, TV2↔TV5 và TV3↔TV6 bảo đảm mỗi cụm có hai người nói được. Quiz, lab, hoán đổi người nói và demo chung buộc cả sáu người hiểu toàn bộ chuỗi từ nền tảng đến ứng dụng.
 
-Đầu ra của giai đoạn này là **sườn được duyệt**. Chỉ sau khi chốt phạm vi, thời lượng, phiên bản Python và phân công tên thật mới bắt đầu làm PPTX, PDF hoặc code demo.
+Sản phẩm phát hành của pha lập kế hoạch là **outline được duyệt**. PPTX, PDF và code demo chỉ được mở khi phạm vi, thời lượng, Python baseline, danh tính owner và quality gate tương ứng đã được xác nhận.

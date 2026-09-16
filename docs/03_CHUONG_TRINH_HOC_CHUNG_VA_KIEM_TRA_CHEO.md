@@ -1,6 +1,11 @@
 # CHƯƠNG TRÌNH HỌC CHUNG VÀ KIỂM TRA CHÉO CHƯƠNG 4
 
-> Mục đích của tài liệu này là giải quyết yêu cầu quan trọng nhất của nhóm: **mỗi người có một chuyên môn rõ ràng, nhưng không ai chỉ biết riêng phần mình**. Sau khi hoàn thành, cả sáu thành viên phải giải thích được toàn bộ mạch “từ bài toán chờ I/O đến một chương trình bất đồng bộ đúng, có giới hạn tải, có xử lý lỗi, có kiểm thử và có số liệu”.
+| Thuộc tính | Giá trị |
+|---|---|
+| Vai trò | Kế hoạch đào tạo nội bộ và kiểm định năng lực |
+| Đối tượng | 6 owner, 3 cặp backup |
+| Chuẩn đầu ra | Toàn bộ chuỗi từ workload đến chương trình bất đồng bộ đúng và đo được |
+| Bằng chứng | Lab, quiz, oral defense, teach-back và rehearsal |
 
 ## 1. Chuẩn đầu ra chung của cả sáu thành viên
 
@@ -280,7 +285,7 @@ Người hỏi không chỉ đọc đáp án. Họ phải đưa tình huống bi
 
 ## 7. Blueprint bài quiz chung
 
-Bài kiểm tra đề xuất gồm 60 câu, 60 phút; mỗi lần sinh đề trộn thứ tự. Không nhất thiết đưa toàn bộ lên slide.
+Blueprint kiểm tra gồm 60 câu trong 60 phút; mỗi lần sinh đề trộn thứ tự. Ngân hàng câu hỏi nằm trong hồ sơ học chung, không đưa toàn bộ lên slide.
 
 | Phần | Số câu | Dạng câu |
 |---|---:|---|
@@ -362,7 +367,7 @@ Ngưỡng đạt cá nhân: **85/100**, trong đó hai tiêu chí “đúng khá
 
 Mọi sản phẩm phải có owner và reviewer. Người review không được là chính người viết; mỗi Pull Request cần nêu đã kiểm gì, không chỉ bấm Approve.
 
-## 11. Quy trình GitHub đề xuất
+## 11. Quy trình GitHub
 
 ### 11.1. Milestone
 
@@ -377,7 +382,7 @@ Tạo một milestone `chapter-4-report` với bốn pha:
 
 - Sáu Issue chuyên môn tương ứng TV1–TV6.
 - Một Issue glossary/version matrix.
-- Một Issue audit tài liệu gốc.
+- Một Issue kiểm tra truy vết tài liệu nguồn.
 - Một Issue common quiz/oral defense.
 - Một Issue demo requirements/test oracle.
 - Một Issue benchmark protocol.
@@ -445,11 +450,11 @@ Báo cáo Chương 4 chỉ hoàn tất khi:
 - cả sáu qua quiz, oral defense và rehearsal có bốc thăm câu ngoài chuyên môn;
 - chỉ sau các điều kiện trên nhóm mới tạo PPTX/PDF.
 
-## 14. Việc nhóm nên làm ngay
+## 14. Kế hoạch khởi động
 
 1. Điền họ tên/MSSV vào TV1–TV6 và xác nhận owner/backup.
 2. Hỏi giảng viên thời lượng để chọn 36 hay 48 slide chính; giữ phần nâng cao ở phụ lục.
-3. Mỗi người đọc `00_DANH_GIA_DO_BAO_PHU_CHUONG_4.md` và `01_BAN_DO_KIEN_THUC_A_Z.md`.
-4. Tạo milestone/Issues theo mục 11, nhưng chưa làm PowerPoint.
+3. Mỗi người đọc `00_HO_SO_DU_AN_VA_MA_TRAN_TRUY_VET.md` và `01_BAN_DO_KIEN_THUC_A_Z.md`.
+4. Tạo milestone và Issue theo mục 11; công việc PowerPoint chỉ mở sau quality gate.
 5. Tổ chức Buổi 1 và Buổi 2; lưu glossary/cây quyết định vào repo.
 6. Chỉ chốt demo sau khi toàn nhóm thống nhất workload và câu hỏi cần chứng minh.

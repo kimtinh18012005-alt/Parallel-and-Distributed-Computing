@@ -26,9 +26,10 @@ flowchart LR
     C --> D[D04 Học chung và kiểm tra chéo]
     D --> E[D05 Đặc tả demo]
     E --> F[D06 WBS 14 ngày]
-    F --> G[Content freeze]
-    G --> H[PPTX PDF và code demo]
-    H --> I[Rehearsal và báo cáo]
+    F --> G[D07 Blueprint PPT cuối cùng]
+    G --> H[Content freeze]
+    H --> I[PPTX PDF và code demo]
+    I --> J[Rehearsal và báo cáo]
 ```
 
 Mỗi giai đoạn có đầu vào, sản phẩm bàn giao và cổng phê duyệt. Artifact của giai đoạn sau chỉ được tạo khi cổng tương ứng trong D01 đã đóng.
@@ -45,6 +46,7 @@ Mỗi giai đoạn có đầu vào, sản phẩm bàn giao và cổng phê duy�
 | D04 | [`03_CHUONG_TRINH_HOC_CHUNG_VA_KIEM_TRA_CHEO.md`](docs/03_CHUONG_TRINH_HOC_CHUNG_VA_KIEM_TRA_CHEO.md) | 40 năng lực chung, 8 buổi học, lab, quiz, oral defense và review chéo |
 | D05 | [`04_DAC_TA_DEMO_THUC_TE_NHO.md`](docs/04_DAC_TA_DEMO_THUC_TE_NHO.md) | Data model, 5 mode, fault injection, test oracle, benchmark và runbook demo |
 | D06 | [`05_KE_HOACH_THUC_HIEN_14_NGAY.md`](docs/05_KE_HOACH_THUC_HIEN_14_NGAY.md) | 48 work package, dependency, timeline, workload dashboard, risk register và bàn giao |
+| D07 | [`06_KIEN_TRUC_PPT_CUOI_CUNG.md`](docs/06_KIEN_TRUC_PPT_CUOI_CUNG.md) | Sơ đồ cây PPT cuối, blueprint 48/36/18 slide, tài sản, speaker notes và checklist xuất bản |
 
 Không duy trì tài liệu trùng vai trò hoặc phân công song song trong nhánh chính. D01–D06 là nguồn sự thật duy nhất của dự án.
 
@@ -104,6 +106,8 @@ Mỗi thành viên phải đạt bốn mức năng lực:
 | Phụ lục | 18 slide, 3/người | Theo Q&A | Không tính vào mạch chính | API matrix, version caveat, phản ví dụ và câu khó |
 
 Mỗi slide có một thông điệp chính, một bằng chứng trực quan và speaker notes. Chi tiết dài nằm trong D02, speaker notes hoặc phụ lục; không đưa nguyên đoạn văn lên mặt slide.
+
+Sơ đồ cây gốc “PPT cuối cùng” và sườn 48 slide chi tiết được quản lý trong D07. Đây là tài liệu sử dụng trực tiếp khi chuyển sang pha tạo PPTX.
 
 ## 7. Demo kiểm chứng
 

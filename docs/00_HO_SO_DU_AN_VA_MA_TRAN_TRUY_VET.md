@@ -48,6 +48,7 @@ Kết quả cuối cùng không chỉ là một bộ slide. Nhóm phải tạo �
 | D04 | `03_CHUONG_TRINH_HOC_CHUNG_VA_KIEM_TRA_CHEO.md` | Đào tạo nội bộ, quiz, lab, oral defense và review | TV5 |
 | D05 | `04_DAC_TA_DEMO_THUC_TE_NHO.md` | Yêu cầu demo, test, benchmark và kịch bản trình diễn | TV2 |
 | D06 | `05_KE_HOACH_THUC_HIEN_14_NGAY.md` | WBS vận hành, lịch, dependency và bàn giao | TV6 |
+| D07 | `06_KIEN_TRUC_PPT_CUOI_CUNG.md` | Sơ đồ cây, sườn PPT chuẩn/rút gọn, phụ lục và cổng dựng PPTX | TV4 |
 
 Người duy trì quy ước quản lý cấu trúc và tính nhất quán; nội dung chuyên môn vẫn do owner tương ứng chịu trách nhiệm. Mỗi vai trò điều phối được giới hạn theo định mức đã công bố trong D03.
 
@@ -170,7 +171,7 @@ Mỗi requirement chỉ được đóng khi đồng thời có nội dung, ngu�
 | G3 — Phân công | D03 được nhóm ký duyệt | 6 gói 100 điểm/48 giờ, không task vô chủ | Thực hiện cá nhân |
 | G4 — Học chéo | Teach-back, lab và quiz đã chạy | 6/6 đạt chuẩn điểm và oral defense | Đóng băng nội dung |
 | G5 — Demo | D05 và test matrix được duyệt | Oracle, mode, fault, benchmark protocol hợp lệ | Cài đặt demo |
-| G6 — Trình bày | Nội dung và demo qua review | Timing, backup, offline plan và Q&A đạt | Tạo PPTX/PDF |
+| G6 — Trình bày | Nội dung và demo qua review; D07 hoàn chỉnh | Timing, backup, offline plan và Q&A đạt | Tạo PPTX/PDF |
 | G7 — Phát hành | Rehearsal cuối hoàn tất | Tag/release chứa đúng artifact được duyệt | Báo cáo chính thức |
 
 ## 10. Kiểm soát thay đổi

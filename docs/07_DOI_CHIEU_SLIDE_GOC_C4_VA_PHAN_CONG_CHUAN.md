@@ -22,20 +22,7 @@ Slide bài giảng gốc của môn học gồm 6 phần lớn được phân b�
 
 ## 2. KẾT QUẢ RÀ SOÁT & TINH GỌN (LỌC BỎ CÁC YẾU TỐ NGOÀI LỀ)
 
-### 2.1. Đánh giá phân công cũ
-Trong bản phân công cũ sơ khởi của nhóm, có một số nội dung mang tính hàn lâm nặng hoặc mở rộng quá đà không xuất hiện trong bài giảng môn học của giảng viên, gây quá tải và làm loãng trọng tâm buổi học:
-- **Nội dung ngoài lề cần bỏ khỏi bài giảng chính của TV1:**
-  - ❌ Bỏ các bài toán chứng minh toán học phức tạp về Amdahl's Law (không có trong slide 1-8 gốc).
-  - ❌ Bỏ checklist benchmark 20 tiêu chí phần cứng/môi trường (dành cho phần thực hành nâng cao nếu cần, không giảng trên lớp).
-  - ❌ Bỏ cách trình bày máy móc, thô cứng dạng "WHAT — ...", "HOW — ...".
-  - ❌ Bỏ ma trận 10 câu hỏi trắc nghiệm nội bộ và thủ tục Pull Request khỏi slide.
-- **Nội dung chuẩn hóa giữ lại và phát triển sâu cho TV1:**
-  - ✅ Bám sát tuyệt đối 8 slide đầu của giảng viên với chuẩn sư phạm cao nhất.
-  - ✅ Tái hiện chính xác và đẹp mắt các sơ đồ gốc: Timeline tuần tự, Concurrency PID, Song song đa lõi, So sánh 3 mô hình, và Mô hình Single-thread concurrent async.
-  - ✅ Khai thác sâu sắc 2 ví dụ kinh điển trong slide gốc: **Ví dụ Đi thi** (mỗi học sinh nhận đề làm độc lập, nộp bài nhận kết quả sau) và **Ví dụ Bãi giữ xe** (bác bảo vệ ghi thẻ xe không chờ khách dắt xe vào chỗ mới phục vụ người tiếp theo).
-  - ✅ Đảm bảo giải đáp trọn vẹn bản chất (What), cơ chế hoạt động (How), và ý nghĩa thực tế (Why) bằng văn phong giảng dạy tự nhiên, chuyên nghiệp.
 
----
 
 ## 3. CHI TIẾT PHÂN CÔNG CHUẨN XÁC CHO 6 THÀNH VIÊN
 

@@ -47,8 +47,29 @@ Mỗi giai đoạn có đầu vào, sản phẩm bàn giao và cổng phê duy�
 | D05 | [`04_DAC_TA_DEMO_THUC_TE_NHO.md`](docs/04_DAC_TA_DEMO_THUC_TE_NHO.md) | Data model, 5 mode, fault injection, test oracle, benchmark và runbook demo |
 | D06 | [`05_KE_HOACH_THUC_HIEN_14_NGAY.md`](docs/05_KE_HOACH_THUC_HIEN_14_NGAY.md) | 48 work package, dependency, timeline, workload dashboard, risk register và bàn giao |
 | D07 | [`06_KIEN_TRUC_PPT_CUOI_CUNG.md`](docs/06_KIEN_TRUC_PPT_CUOI_CUNG.md) | Sơ đồ cây PPT cuối, blueprint 48/36/18 slide, tài sản, speaker notes và checklist xuất bản |
+| D08 | [`07_DOI_CHIEU_SLIDE_GOC_C4_VA_PHAN_CONG_CHUAN.md`](docs/07_DOI_CHIEU_SLIDE_GOC_C4_VA_PHAN_CONG_CHUAN.md) | **ĐỐI CHIẾU CHUẨN:** So sánh 100% nhiệm vụ TV1–TV6 với 24 slide gốc của giảng viên, loại bỏ yếu tố ngoài lề |
 
-Không duy trì tài liệu trùng vai trò hoặc phân công song song trong nhánh chính. D01–D06 là nguồn sự thật duy nhất của dự án.
+Không duy trì tài liệu trùng vai trò hoặc phân công song song trong nhánh chính.
+
+---
+
+## 2.1. KẾT QUẢ BÀN GIAO THÀNH VIÊN 1 (TV1) — HOÀN TẤT 100% CHUẨN SLIDE GỐC C4
+
+> **Phạm vi phụ trách của TV1:** Slide 1 đến Slide 8 của bài giảng gốc `BaiGiang_TinhToanSongSong_PhanTan_C4.pdf` (Toàn bộ Phần I: Giới thiệu).
+> **Đã loại bỏ các yếu tố ngoài lề:** Bỏ chứng minh toán Amdahl phức tạp, bỏ checklist benchmark 20 tiêu chí, bỏ các nhãn máy móc "WHAT/HOW", chuẩn hóa hoàn toàn theo phong cách bài giảng đại học sư phạm cao cấp.
+
+### Các sản phẩm chính đã sẵn sàng trong Repository:
+
+| STT | Tên sản phẩm / Đường dẫn | Mô tả chi tiết |
+|:---:|---|---|
+| 1 | 📊 [`slides/TV1_BaiGiang_ChuanFileGoc_C4.pptx`](slides/TV1_BaiGiang_ChuanFileGoc_C4.pptx) | **Bản slide chuẩn mực 100% bám sát 8 slide gốc:** Tỉ lệ 4:3, nhận diện cam san hô (`#E74C3C`), thanh 3 khối chân trang, chứa đầy đủ sơ đồ gốc và 2 ví dụ kinh điển (Bãi giữ xe & Đi thi). |
+| 2 | 🎓 [`slides/TV1_BaiGiang_TinhToanSongSong_PhanTan_C4_BaiGiangChinhThuc.pptx`](slides/TV1_BaiGiang_TinhToanSongSong_PhanTan_C4_BaiGiangChinhThuc.pptx) | **Bản slide bài giảng mở rộng 24 trang:** Thiết kế sư phạm đỉnh cao cho buổi giảng dạy/thuyết trình chuyên nghiệp, phân tích sâu cơ chế chia sẻ thời gian, PID, Multi-core và Event-loop. |
+| 3 | 📄 [`reports/TV1_BaoCao_ChiTiet_A_Z_PDC_Chuong4.docx`](reports/TV1_BaoCao_ChiTiet_A_Z_PDC_Chuong4.docx) | **Báo cáo học thuật Word từ A-Z:** Tài liệu chuyên sâu 8 chương, giải thích cặn kẽ bản chất, cơ chế hoạt động và ứng dụng thực tế. |
+| 4 | 📑 [`reports/TV1_BaoCao_ChiTiet_A_Z_PDC_Chuong4.pdf`](reports/TV1_BaoCao_ChiTiet_A_Z_PDC_Chuong4.pdf) | **Bản PDF xuất bản chất lượng cao** của Báo cáo A-Z phục vụ in ấn hoặc chấm điểm trực tiếp. |
+| 5 | 🖼️ [`slides/images/`](slides/images/) | **Kho hình ảnh sơ đồ gốc độ phân giải cao:** Gồm 6 sơ đồ vector/diagram chuẩn hóa khớp 100% slide của giảng viên. |
+| 6 | ⚙️ [`scripts/`](scripts/) | **Mã nguồn tự động hóa:** Các file python dựng slide PPTX và sinh sơ đồ đồ họa độc quyền. |
+
+---
 
 ## 3. Kiến trúc nội dung và trách nhiệm
 

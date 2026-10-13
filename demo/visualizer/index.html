@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDC Lab - Trực Quan Hóa Tính Toán Song Song & Bất Đồng Bộ (Chương 4)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0e17;
+      --bg-card: #111827;
+      --bg-panel: #161f30;
+      --bg-code: #0d1117;
+      --border-color: #233148;
+      --border-glow: #38bdf840;
+      --accent-cyan: #38bdf8;
+      --accent-green: #34d399;
+      --accent-yellow: #fbbf24;
+      --accent-purple: #c084fc;
+      --accent-red: #f87171;
+      --accent-blue: #60a5fa;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOP NAVBAR */
+    header {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0284c7, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: white;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    .brand-text h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text p {
+      font-size: 0.75rem;
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    /* CONTROLS BAR */
+    .controls-strip {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .mode-tabs {
+      display: flex;
+      background: var(--bg-dark);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      gap: 4px;
+      overflow-x: auto;
+    }
+
+    .mode-tab {
+      padding: 7px 14px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mode-tab:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .mode-tab.active {
+      color: #0f172a;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+
+    .mode-tab.active.fault-tab {
+      background: var(--accent-red);
+      color: white;
+      box-shadow: 0 0 12px rgba(248, 113, 113, 0.5);
+    }
+
+    .action-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: white;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5);
+    }
+
+    .btn-secondary {
+      background: var(--bg-panel);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover {
+      background: #233148;
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, #8b5cf6, #d946ef);
+      color: white;
+      box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
+    }
+    .btn-accent:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.5);
+    }
+
+    .speed-select {
+      background: var(--bg-panel);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* MAIN SPLIT VIEW (50-50 LAYOUT) */
+    .main-workspace {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      gap: 1px;
+      background: var(--border-color);
+      min-height: calc(100vh - 130px);
+    }
+
+    @media (max-width: 1024px) {
+      .main-workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* LEFT PANE: VIDEO / SIMULATION CANVAS */
+    .visual-pane {
+      background: var(--bg-dark);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+    }
+
+    .pane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .pane-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-cyan);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+    }
+
+    /* SIMULATION CANVAS CONTAINER */
+    .canvas-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ARCHITECTURE GRAPH / ANIMATION */
+    .sim-arena {
+      width: 100%;
+      height: 380px;
+      position: relative;
+      background: radial-gradient(circle at 50% 50%, #17223b 0%, #0d131f 100%);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #1f2c42;
+    }
+
+    /* HUD METRICS */
+    .hud-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .metric-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .metric-title {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .metric-val {
+      font-size: 1.35rem;
+      font-weight: 800;
+      font-family: 'Fira Code', monospace;
+      color: var(--text-main);
+    }
+
+    .metric-unit {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* GANTT TIMELINE */
+    .timeline-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .timeline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .timeline-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .timeline-tracks {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .station-track {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .track-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      width: 65px;
+    }
+
+    .track-bar-wrap {
+      flex: 1;
+      height: 18px;
+      background: #0d131f;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid #1e293b;
+    }
+
+    .track-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 3px;
+      transition: width 0.1s linear;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .track-status-text {
+      font-size: 0.7rem;
+      font-family: 'Fira Code', monospace;
+      width: 80px;
+      text-align: right;
+    }
+
+    /* SENSOR STATIONS LIST TABLE */
+    .sensor-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .sensor-table th {
+      text-align: left;
+      padding: 8px;
+      background: var(--bg-panel);
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sensor-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #1e293b;
+      color: var(--text-muted);
+    }
+
+    /* RIGHT PANE: LIVE CODE FLOW & INSPECTOR */
+    .code-pane {
+      background: var(--bg-code);
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--border-color);
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .code-header {
+      background: #111726;
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .code-filename {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    .code-exec-status {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-yellow);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* CODE EDITOR DISPLAY */
+    .code-scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      background: #090d16;
+    }
+
+    .code-line {
+      display: flex;
+      align-items: center;
+      padding: 1px 16px;
+      transition: background 0.15s ease;
+      position: relative;
+    }
+
+    .code-line:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .line-num {
+      width: 38px;
+      color: #475569;
+      user-select: none;
+      text-align: right;
+      margin-right: 18px;
+      font-size: 0.78rem;
+    }
+
+    .line-content {
+      flex: 1;
+      color: #cbd5e1;
+      white-space: pre;
+    }
+
+    /* ACTIVE LINE EXECUTION HIGHLIGHT */
+    .code-line.active-line {
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.25) 0%, rgba(56, 189, 248, 0.05) 80%);
+      border-left: 4px solid var(--accent-cyan);
+      box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+
+    .code-line.active-line .line-num {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .code-line.active-line .line-content {
+      color: #ffffff;
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+    }
+
+    .code-line.active-line::after {
+      content: '► RUNNING';
+      position: absolute;
+      right: 18px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--accent-cyan);
+      color: #090d16;
+      letter-spacing: 0.05em;
+      box-shadow: 0 0 8px var(--accent-cyan);
+      animation: pulseGlow 1.2s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      from { opacity: 0.8; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1.02); }
+    }
+
+    /* SYNTAX HIGHLIGHTING */
+    .token-kw { color: #f472b6; font-weight: 600; } /* def, async, await, with, for */
+    .token-fn { color: #60a5fa; font-weight: 600; } /* function name */
+    .token-str { color: #34d399; } /* string */
+    .token-com { color: #64748b; font-style: italic; } /* comments */
+    .token-num { color: #fb923c; } /* numbers */
+    .token-var { color: #f1f5f9; }
+
+    /* VARIABLE & STACK INSPECTOR */
+    .inspector-pane {
+      background: #111726;
+      border-top: 1px solid var(--border-color);
+      padding: 12px 18px;
+      max-height: 160px;
+      overflow-y: auto;
+    }
+
+    .inspector-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .var-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.76rem;
+    }
+
+    .var-pill {
+      background: #090d16;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 5px 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .var-name {
+      color: var(--accent-cyan);
+    }
+
+    .var-val {
+      color: var(--accent-yellow);
+      font-weight: 600;
+    }
+
+    /* LOG CONSOLE */
+    .console-pane {
+      background: #090d16;
+      border-top: 1px solid var(--border-color);
+      height: 120px;
+      overflow-y: auto;
+      padding: 8px 16px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+    }
+
+    .console-line {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .log-time { color: #64748b; }
+    .log-info { color: #38bdf8; }
+    .log-success { color: #34d399; }
+    .log-warn { color: #fbbf24; }
+    .log-error { color: #f87171; }
+
+    /* MODAL BENCHMARK */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 900px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .close-modal:hover { color: white; }
+
+    /* BENCHMARK COMPARISON BARS */
+    .chart-bar-group {
+      margin-bottom: 18px;
+    }
+
+    .chart-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .chart-bar-bg {
+      height: 28px;
+      background: #1e293b;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chart-bar-fill {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #0f172a;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* DRAWER CONFIGURATION */
+    .config-drawer {
+      display: none;
+      background: #161f30;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .config-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 180px;
+    }
+
+    .config-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .config-slider {
+      accent-color: var(--accent-cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">⚡</div>
+      <div class="brand-text">
+        <h1>Parallel & Distributed Computing Lab</h1>
+        <p>Chương 4 — Phương pháp tính toán bất đồng bộ trong Python (Interactive Visualizer)</p>
+      </div>
+    </div>
+    <div class="action-group">
+      <button class="btn btn-secondary" onclick="toggleConfigDrawer()">⚙️ Cấu hình Tham số</button>
+      <button class="btn btn-accent" onclick="openBenchmarkModal()">📊 So Sánh Benchmark Đối Đầu</button>
+    </div>
+  </header>
+
+  <!-- CONTROLS & MODE STRIP -->
+  <div class="controls-strip">
+    <div class="mode-tabs">
+      <button class="mode-tab active" data-mode="async" onclick="switchMode('async')">🔄 1. Asyncio Event Loop</button>
+      <button class="mode-tab" data-mode="thread" onclick="switchMode('thread')">🧵 2. ThreadPoolExecutor</button>
+      <button class="mode-tab" data-mode="sequential" onclick="switchMode('sequential')">⚡ 3. Sequential Baseline</button>
+      <button class="mode-tab" data-mode="process" onclick="switchMode('process')">⚙️ 4. ProcessPool (CPU-bound)</button>
+      <button class="mode-tab" data-mode="hybrid" onclick="switchMode('hybrid')">🚀 5. Hybrid (Async + Process)</button>
+      <button class="mode-tab fault-tab" data-mode="fault_f7" onclick="switchMode('fault_f7')">⚠️ 6. Bẫy time.sleep() (Fault F7)</button>
+    </div>
+
+    <div class="action-group">
+      <button class="btn btn-primary" id="btn-play" onclick="togglePlay()">▶ Bắt đầu chạy</button>
+      <button class="btn btn-secondary" id="btn-step" onclick="stepNext()">⏭ Bước tiếp (Step)</button>
+      <button class="btn btn-secondary" onclick="resetSimulation()">🔄 Đặt lại (Reset)</button>
+      <select class="speed-select" id="speed-select" onchange="changeSpeed(this.value)">
+        <option value="0.5">Tốc độ 0.5x</option>
+        <option value="1" selected>Tốc độ 1.0x</option>
+        <option value="2">Tốc độ 2.0x</option>
+        <option value="4">Tốc độ 4.0x</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- CONFIG DRAWER (SLIDERS) -->
+  <div class="config-drawer" id="config-drawer">
+    <div class="config-item">
+      <label class="config-label">Số trạm cảm biến (<span id="val-num-stations">8</span> trạm):</label>
+      <input type="range" class="config-slider" min="4" max="12" value="8" id="slider-stations" oninput="updateConfig('stations', this.value)">
+    </div>
+    <div class="config-item">
+      <label class="config-label">Giới hạn Concurrency / Workers (<span id="val-concurrency">4</span>):</label>
+      <input type="range" class="config-slider" min="1" max="8" value="4" id="slider-concurrency" oninput="updateConfig('concurrency', this.value)">
+    </div>
+    <div class="config-item">
+      <label class="config-label">Ngưỡng Timeout I/O (<span id="val-timeout">650</span> ms):</label>
+      <input type="range" class="config-slider" min="300" max="1200" step="50" value="650" id="slider-timeout" oninput="updateConfig('timeout', this.value)">
+    </div>
+    <div class="config-item">
+      <label class="config-label">Mô phỏng Lỗi Mạng (<span id="val-failure">10</span>%):</label>
+      <input type="range" class="config-slider" min="0" max="40" step="5" value="10" id="slider-failure" oninput="updateConfig('failure', this.value)">
+    </div>
+  </div>
+
+  <!-- MAIN SPLIT SCREEN: LEFT VISUAL SIMULATION, RIGHT LIVE CODE -->
+  <div class="main-workspace">
+
+    <!-- ==================== LEFT PANE: VIDEO / VISUAL SIMULATOR ==================== -->
+    <div class="visual-pane">
+      <div class="pane-header">
+        <div class="pane-title">
+          <span>🎬 MÔ PHỎNG TRỰC QUAN HỆ THỐNG IoT & LUỒNG XỬ LÝ</span>
+        </div>
+        <div class="status-badge" id="sim-status-badge">
+          <span class="status-dot"></span>
+          <span id="sim-status-text">SẴN SÀNG (READY)</span>
+        </div>
+      </div>
+
+      <!-- SIMULATION GRAPH / CANVAS -->
+      <div class="canvas-container">
+        <div class="sim-arena" id="sim-arena">
+          <svg id="sim-svg" width="100%" height="100%" style="position: absolute; top: 0; left: 0;"></svg>
+        </div>
+      </div>
+
+      <!-- HUD METRICS -->
+      <div class="hud-metrics">
+        <div class="metric-card">
+          <div class="metric-title">Thời Gian Chạy</div>
+          <div class="metric-val" id="metric-time">0.0</div>
+          <div class="metric-unit">mili-giây (ms)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Thông Lượng</div>
+          <div class="metric-val" id="metric-throughput">0.0</div>
+          <div class="metric-unit">trạm / giây</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Tác Vụ In-Flight</div>
+          <div class="metric-val" id="metric-inflight">0 / 4</div>
+          <div class="metric-unit">active concurrency</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Oracle Digest</div>
+          <div class="metric-val" id="metric-digest" style="font-size: 0.95rem; color: var(--accent-green);">a7f892c019...</div>
+          <div class="metric-unit">SHA-256 match</div>
+        </div>
+      </div>
+
+      <!-- REAL-TIME GANTT TIMELINE -->
+      <div class="timeline-container">
+        <div class="timeline-header">
+          <span class="timeline-title">📈 GANTT TIMELINE - TIẾN TRÌNH CÁC TRẠM CẢM BIẾN</span>
+          <span style="font-size: 0.72rem; color: var(--text-dim);">
+            <span style="color: var(--accent-blue);">■ Chờ I/O</span> &nbsp;
+            <span style="color: var(--accent-purple);">■ Tính Anomaly CPU</span> &nbsp;
+            <span style="color: var(--accent-green);">■ Thành công</span> &nbsp;
+            <span style="color: var(--accent-red);">■ Timeout/Lỗi</span>
+          </span>
+        </div>
+        <div class="timeline-tracks" id="timeline-tracks">
+          <!-- Sẽ được render động bằng JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== RIGHT PANE: LIVE CODE FLOW ==================== -->
+    <div class="code-pane">
+      <div class="code-header">
+        <div class="code-filename" id="code-filename">
+          <span>📄</span>
+          <span id="code-file-title">async_mode.py</span>
+        </div>
+        <div class="code-exec-status" id="code-exec-status">
+          <span>⚡ Dòng đang chạy:</span>
+          <span id="code-active-line-num" style="color: var(--accent-cyan); font-family: 'Fira Code';">Dòng 12</span>
+        </div>
+      </div>
+
+      <!-- CODE SCROLL VIEW WITH LINE-BY-LINE HIGHLIGHT -->
+      <div class="code-scroll-area" id="code-scroll-area">
+        <!-- Render động mã nguồn Python với highlighter -->
+      </div>
+
+      <!-- VARIABLE & STACK INSPECTOR -->
+      <div class="inspector-pane">
+        <div class="inspector-title">
+          <span>🔍 LIVE VARIABLE WATCH & RUNTIME STATE</span>
+          <span id="call-stack-indicator" style="color: var(--accent-cyan); text-transform: none;">Frame: main()</span>
+        </div>
+        <div class="var-grid" id="var-grid">
+          <div class="var-pill"><span class="var-name">mode:</span> <span class="var-val">"asyncio"</span></div>
+          <div class="var-pill"><span class="var-name">in_flight:</span> <span class="var-val" id="var-inflight">0</span></div>
+          <div class="var-pill"><span class="var-name">sem_permits:</span> <span class="var-val" id="var-sem">4</span></div>
+          <div class="var-pill"><span class="var-name">event_loop:</span> <span class="var-val" id="var-loop">IDLE</span></div>
+          <div class="var-pill"><span class="var-name">cur_station:</span> <span class="var-val" id="var-station">None</span></div>
+          <div class="var-pill"><span class="var-name">queue_size:</span> <span class="var-val" id="var-queue">0 / 5</span></div>
+        </div>
+      </div>
+
+      <!-- REAL-TIME TERMINAL CONSOLE LOG -->
+      <div class="console-pane" id="console-pane">
+        <div class="console-line"><span class="log-time">[00:00.000]</span> <span class="log-info">[INFO]</span> Hệ thống sẵn sàng. Chọn chế độ thực thi và bấm 'Bắt đầu chạy'.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL: SO SÁNH BENCHMARK ĐỐI ĐẦU -->
+  <div class="modal-backdrop" id="benchmark-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">🚀 BẢNG ĐỐI CHIẾU BENCHMARK 5 CHẾ ĐỘ THỰC THI (CHƯƠNG 4)</div>
+        <button class="close-modal" onclick="closeBenchmarkModal()">&times;</button>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+        Thử nghiệm trên 8 trạm cảm biến, Concurrency = 4, Seed = 42. Đo lường theo đúng Giao thức Benchmark Section 14 của Tài liệu D05.
+      </p>
+
+      <div id="benchmark-charts">
+        <div class="chart-bar-group">
+          <div class="chart-bar-label">
+            <span>⚡ Tuần tự (Sequential Baseline - Oracle)</span>
+            <span style="font-family: 'Fira Code'; color: var(--accent-yellow);">2,891 ms (Speedup: 1.00x - Baseline)</span>
+          </div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar-fill" style="width: 100%; background: #eab308;">2,891 ms</div>
+          </div>
+        </div>
+
+        <div class="chart-bar-group">
+          <div class="chart-bar-label">
+            <span>🧵 Đa luồng (ThreadPoolExecutor - 4 Workers)</span>
+            <span style="font-family: 'Fira Code'; color: var(--accent-cyan);">968 ms (Speedup: 2.99x)</span>
+          </div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar-fill" style="width: 33.5%; background: var(--accent-cyan);">968 ms</div>
+          </div>
+        </div>
+
+        <div class="chart-bar-group">
+          <div class="chart-bar-label">
+            <span>🔄 Bất đồng bộ (Asyncio Event Loop - Single Thread)</span>
+            <span style="font-family: 'Fira Code'; color: var(--accent-green);">975 ms (Speedup: 2.96x - Không tốn thread overhead)</span>
+          </div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar-fill" style="width: 33.7%; background: var(--accent-green);">975 ms</div>
+          </div>
+        </div>
+
+        <div class="chart-bar-group">
+          <div class="chart-bar-label">
+            <span>⚙️ Đa tiến trình (ProcessPoolExecutor - IPC & Spawn Overhead)</span>
+            <span style="font-family: 'Fira Code'; color: var(--accent-purple);">3,528 ms (Speedup: 0.82x - Chậm do tải CPU nhẹ)</span>
+          </div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar-fill" style="width: 122%; max-width: 100%; background: var(--accent-purple);">3,528 ms</div>
+          </div>
+        </div>
+
+        <div class="chart-bar-group">
+          <div class="chart-bar-label">
+            <span>🚀 Mô hình Lai (Hybrid Async I/O + Process CPU)</span>
+            <span style="font-family: 'Fira Code'; color: #38bdf8;">1,081 ms (Speedup: 2.67x)</span>
+          </div>
+          <div class="chart-bar-bg">
+            <div class="chart-bar-fill" style="width: 37.4%; background: linear-gradient(90deg, #38bdf8, #818cf8);">1,081 ms</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-panel); border-radius: 10px; padding: 16px; margin-top: 24px; border: 1px solid var(--border-color);">
+        <h4 style="color: var(--accent-cyan); font-size: 0.9rem; margin-bottom: 8px;">💡 ĐÚC KẾT SƯ PHẠM CHUYÊN SÂU:</h4>
+        <ul style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; padding-left: 20px;">
+          <li><b>ThreadPool và Asyncio:</b> Đạt tốc độ tương đương (~3x nhanh hơn tuần tự) vì đều chồng lấn thời gian chờ I/O mạng. Nhưng <code>Asyncio</code> chỉ dùng duy nhất <b>1 luồng CPU</b>, tránh được chi phí context switch và bộ nhớ cấp phát cho từng Thread stack!</li>
+          <li><b>ProcessPool Overhead:</b> Khi tác vụ CPU còn nhỏ, chi phí IPC (Inter-Process Communication) và Pickling dữ liệu qua lại giữa các tiến trình trên Windows khiến ProcessPool chậm hơn cả tuần tự! Nó chỉ thực sự bứt phá khi CPU workload đủ lớn.</li>
+          <li><b>Mô hình Lai (Hybrid):</b> Là lựa chọn vàng cho các hệ thống thực tế: Asyncio hứng hàng ngàn kết nối I/O nhẹ, gom vào hàng đợi hữu hạn (Queue) tạo áp lực ngược (Backpressure), và chia việc CPU nặng cho ProcessPool.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    // =========================================================================
+    // CODE TEMPLATES FOR EACH MODE WITH EXECUTION FLOW LINES
+    // =========================================================================
+    const CODE_SNIPPETS = {
+      async: [
+        { num: 1, text: `<span class="token-kw">import</span> asyncio`, explain: "Import thư viện asyncio" },
+        { num: 2, text: `<span class="token-kw">from</span> sensor_demo <span class="token-kw">import</span> async_fetch_station, StationConfig`, explain: "Nạp async adapter" },
+        { num: 3, text: ``, explain: "" },
+        { num: 4, text: `<span class="token-kw">async def</span> <span class="token-fn">fetch_with_semaphore</span>(sem, station, seed):`, explain: "Định nghĩa coroutine có bảo vệ Semaphore" },
+        { num: 5, text: `    <span class="token-kw">async with</span> sem:  <span class="token-com"># Chờ lấy giấy phép (Permit) từ Semaphore</span>`, explain: "Kiểm tra giới hạn concurrency" },
+        { num: 6, text: `        print(<span class="token-str">f"Bắt đầu trạm {station.id}"</span>)`, explain: "Bắt đầu gọi I/O" },
+        { num: 7, text: `        result = <span class="token-kw">await</span> <span class="token-fn">async_fetch_station</span>(station, seed) <span class="token-com"># Nhường quyền!</span>`, explain: "AWAIT: Nhường quyền điều khiển cho Event Loop!" },
+        { num: 8, text: `        <span class="token-kw">return</span> result`, explain: "Trả về kết quả bản ghi cảm biến" },
+        { num: 9, text: ``, explain: "" },
+        { num: 10, text: `<span class="token-kw">async def</span> <span class="token-fn">main_pipeline</span>(stations, max_concurrency=4):`, explain: "Hàm điều phối chính" },
+        { num: 11, text: `    sem = asyncio.Semaphore(max_concurrency) <span class="token-com"># Giới hạn in-flight</span>`, explain: "Khởi tạo Semaphore giới hạn concurrency" },
+        { num: 12, text: `    <span class="token-com"># Tạo danh sách các Task bất đồng bộ (Fan-Out)</span>`, explain: "Lên lịch các coroutine vào Event Loop" },
+        { num: 13, text: `    tasks = [`, explain: "Tạo danh sách Task" },
+        { num: 14, text: `        asyncio.create_task(fetch_with_semaphore(sem, s, 42))`, explain: "create_task đưa coroutine vào queue của Event Loop" },
+        { num: 15, text: `        <span class="token-kw">for</span> s <span class="token-kw">in</span> stations`, explain: "Duyệt qua tất cả trạm cảm biến" },
+        { num: 16, text: `    ]`, explain: "Danh sách Task hoàn tất" },
+        { num: 17, text: `    <span class="token-com"># Gom toàn bộ kết quả song song (Fan-In)</span>`, explain: "Chờ tất cả hoàn thành" },
+        { num: 18, text: `    results = <span class="token-kw">await</span> asyncio.gather(*tasks)`, explain: "AWAIT GATHER: Event loop điều phối đồng thời!" },
+        { num: 19, text: `    <span class="token-kw">return</span> results`, explain: "Hoàn tất pipeline" }
+      ],
+      thread: [
+        { num: 1, text: `<span class="token-kw">from</span> concurrent.futures <span class="token-kw">import</span> ThreadPoolExecutor, as_completed`, explain: "Nạp ThreadPoolExecutor" },
+        { num: 2, text: `<span class="token-kw">from</span> sensor_demo <span class="token-kw">import</span> blocking_fetch_station`, explain: "Nạp blocking adapter" },
+        { num: 3, text: ``, explain: "" },
+        { num: 4, text: `<span class="token-kw">def</span> <span class="token-fn">run_thread_pool</span>(stations, max_workers=4):`, explain: "Định nghĩa hàm đa luồng" },
+        { num: 5, text: `    results = []`, explain: "Khởi tạo danh sách kết quả" },
+        { num: 6, text: `    <span class="token-com"># Context manager đảm bảo shutdown(wait=True)</span>`, explain: "Mở Thread Pool" },
+        { num: 7, text: `    <span class="token-kw">with</span> ThreadPoolExecutor(max_workers=max_workers) <span class="token-kw">as</span> executor:`, explain: "Khởi tạo 4 Worker Threads trong pool" },
+        { num: 8, text: `        <span class="token-com"># Submit callable blocking vào Worker Thread, nhận Future</span>`, explain: "Submit các công việc" },
+        { num: 9, text: `        future_to_station = {`, explain: "Bản đồ ánh xạ Future" },
+        { num: 10, text: `            executor.submit(blocking_fetch_station, s, 42): s`, explain: "Đẩy task vào queue của thread pool" },
+        { num: 11, text: `            <span class="token-kw">for</span> s <span class="token-kw">in</span> stations`, explain: "Lặp qua danh sách trạm" },
+        { num: 12, text: `        }`, explain: "Tất cả Future đang PENDING / RUNNING" },
+        { num: 13, text: `        <span class="token-com"># Thu hoạch ngay khi trạm nào xong trước (Completion Order)</span>`, explain: "as_completed trả về Future ngay khi xong" },
+        { num: 14, text: `        <span class="token-kw">for</span> fut <span class="token-kw">in</span> as_completed(future_to_station):`, explain: "Vòng lặp thu hoạch kết quả hoàn tất" },
+        { num: 15, text: `            res = fut.result() <span class="token-com"># Lấy dữ liệu hoặc ném ngoại lệ</span>`, explain: "Nhận kết quả từ worker thread" },
+        { num: 16, text: `            results.append(res)`, explain: "Lưu bản ghi thành công" },
+        { num: 17, text: `    <span class="token-kw">return</span> results`, explain: "Tự động shutdown worker threads" }
+      ],
+      sequential: [
+        { num: 1, text: `<span class="token-kw">import</span> time`, explain: "Import time" },
+        { num: 2, text: `<span class="token-kw">from</span> sensor_demo <span class="token-kw">import</span> blocking_fetch_station`, explain: "Blocking adapter" },
+        { num: 3, text: ``, explain: "" },
+        { num: 4, text: `<span class="token-kw">def</span> <span class="token-fn">run_sequential</span>(stations):`, explain: "Tuần tự Baseline Oracle" },
+        { num: 5, text: `    results = []`, explain: "Danh sách kết quả" },
+        { num: 6, text: `    <span class="token-com"># Luồng tuần tự: Trạm 1 xong mới được gọi Trạm 2</span>`, explain: "Vòng lặp tuần tự" },
+        { num: 7, text: `    <span class="token-kw">for</span> station <span class="token-kw">in</span> stations:`, explain: "Lần lượt từng trạm nối tiếp" },
+        { num: 8, text: `        print(<span class="token-str">f"Đang đợi I/O trạm {station.id}..."</span>)`, explain: "Bắt đầu chờ I/O" },
+        { num: 9, text: `        res = blocking_fetch_station(station, seed=42)  <span class="token-com"># CPU RẢNH RỖI!</span>`, explain: "BLOCKING: CPU idle hoàn toàn khi mạng trễ" },
+        { num: 10, text: `        results.append(res)`, explain: "Lưu kết quả trạm" },
+        { num: 11, text: `    <span class="token-com"># Tổng thời gian = SUM(delay của từng trạm)</span>`, explain: "Tổng thời gian nối đuôi" },
+        { num: 12, text: `    <span class="token-kw">return</span> results`, explain: "Trả về kết quả baseline" }
+      ],
+      process: [
+        { num: 1, text: `<span class="token-kw">from</span> concurrent.futures <span class="token-kw">import</span> ProcessPoolExecutor`, explain: "ProcessPoolExecutor" },
+        { num: 2, text: `<span class="token-kw">from</span> sensor_demo <span class="token-kw">import</span> cpu_intensive_anomaly_detection`, explain: "Top-level pickleable function" },
+        { num: 3, text: ``, explain: "" },
+        { num: 4, text: `<span class="token-kw">def</span> <span class="token-fn">run_process_pool</span>(stations, max_workers=4):`, explain: "Đa tiến trình độc lập" },
+        { num: 5, text: `    records = fetch_all_records(stations) <span class="token-com"># Thu thập I/O</span>`, explain: "Lấy dữ liệu cảm biến" },
+        { num: 6, text: `    <span class="token-com"># Tách bước tính toán CPU-bound sang các Worker Process</span>`, explain: "Bắt đầu phân tích CPU" },
+        { num: 7, text: `    <span class="token-kw">with</span> ProcessPoolExecutor(max_workers=max_workers) <span class="token-kw">as</span> executor:`, explain: "Spawn các OS Process độc lập (vượt GIL)" },
+        { num: 8, text: `        <span class="token-com"># Dữ liệu được Serialize (Pickle) và gửi qua IPC</span>`, explain: "Pickle dữ liệu qua socket/pipe" },
+        { num: 9, text: `        futures = [`, explain: "Submit batch công việc CPU" },
+        { num: 10, text: `            executor.submit(cpu_intensive_anomaly_detection, rec, 50000)`, explain: "Mỗi tiến trình chạy trên 1 lõi CPU vật lý" },
+        { num: 11, text: `            <span class="token-kw">for</span> rec <span class="token-kw">in</span> records`, explain: "Phân phối cho các core" },
+        { num: 12, text: `        ]`, explain: "Các lõi CPU tính toán 100% song song" },
+        { num: 13, text: `        results = [f.result() <span class="token-kw">for</span> f <span class="token-kw">in</span> futures]`, explain: "Nhận kết quả anomaly digest" },
+        { num: 14, text: `    <span class="token-kw">return</span> results`, explain: "Tự động dọn dẹp các process con" }
+      ],
+      hybrid: [
+        { num: 1, text: `<span class="token-kw">import</span> asyncio`, explain: "Asyncio" },
+        { num: 2, text: `<span class="token-kw">from</span> concurrent.futures <span class="token-kw">import</span> ProcessPoolExecutor`, explain: "ProcessPool" },
+        { num: 3, text: ``, explain: "" },
+        { num: 4, text: `<span class="token-kw">async def</span> <span class="token-fn">hybrid_pipeline</span>(stations):`, explain: "Mô hình kiến trúc Lai (Hybrid)" },
+        { num: 5, text: `    queue = asyncio.Queue(maxsize=5) <span class="token-com"># Bounded Queue (Backpressure)</span>`, explain: "Hàng đợi hữu hạn chống tràn bộ nhớ" },
+        { num: 6, text: `    pool = ProcessPoolExecutor(max_workers=4) <span class="token-com"># CPU Pool</span>`, explain: "Khởi tạo CPU Process Pool" },
+        { num: 7, text: `    <span class="token-com"># PRODUCER: Asyncio gom dữ liệu trạm siêu nhanh</span>`, explain: "Tác vụ thu thập I/O" },
+        { num: 8, text: `    <span class="token-kw">async def</span> <span class="token-fn">producer</span>(station):`, explain: "Định nghĩa Producer" },
+        { num: 9, text: `        data = <span class="token-kw">await</span> async_fetch(station)`, explain: "Thu thập không đồng bộ" },
+        { num: 10, text: `        <span class="token-kw">await</span> queue.put(data) <span class="token-com"># Đợi nếu queue đầy (Backpressure!)</span>`, explain: "Đẩy vào queue (chịu áp lực ngược)" },
+        { num: 11, text: `    <span class="token-com"># CONSUMER: Bắn tác vụ nặng sang ProcessPool</span>`, explain: "Tác vụ xử lý CPU" },
+        { num: 12, text: `    <span class="token-kw">async def</span> <span class="token-fn">consumer</span>():`, explain: "Định nghĩa Consumer" },
+        { num: 13, text: `        data = <span class="token-kw">await</span> queue.get()`, explain: "Lấy item từ queue" },
+        { num: 14, text: `        res = <span class="token-kw">await</span> loop.run_in_executor(pool, cpu_detect, data)`, explain: "Đẩy sang ProcessPool và await kết quả" },
+        { num: 15, text: `        queue.task_done()`, explain: "Báo cáo task_done" },
+        { num: 16, text: `    <span class="token-kw">await</span> asyncio.gather(*[producer(s) <span class="token-kw">for</span> s <span class="token-kw">in</span> stations])`, explain: "Đồng bộ toàn pipeline" }
+      ],
+      fault_f7: [
+        { num: 1, text: `<span class="token-kw">import</span> time, asyncio`, explain: "Import module" },
+        { num: 2, text: ``, explain: "" },
+        { num: 3, text: `<span class="token-com"># BẪY TỬ THẦN F7: Gọi blocking time.sleep() trong Coroutine!</span>`, explain: "Cảnh báo lỗi kiến trúc nghiêm trọng" },
+        { num: 4, text: `<span class="token-kw">async def</span> <span class="token-fn">broken_worker</span>():`, explain: "Coroutine có lỗi blocking" },
+        { num: 5, text: `    print(<span class="token-str">"Đang gọi time.sleep(1.0)..."</span>)`, explain: "Bắt đầu gọi sleep" },
+        { num: 6, text: `    <span class="token-com" style="color:#f87171;font-weight:700;">time.sleep(1.0) # SAI LẦM: Chặn đứng Event Loop!</span>`, explain: "LỖI: Đóng băng toàn bộ Event Loop thread!" },
+        { num: 7, text: ``, explain: "" },
+        { num: 8, text: `<span class="token-com"># CÁCH SỬA CHUẨN: Dùng asyncio.sleep()</span>`, explain: "Giải pháp kiến trúc đúng" },
+        { num: 9, text: `<span class="token-kw">async def</span> <span class="token-fn">fixed_worker</span>():`, explain: "Coroutine chuẩn mực" },
+        { num: 10, text: `    <span class="token-kw">await</span> asyncio.sleep(1.0) <span class="token-com"># ĐÚNG: Nhường quyền điều khiển!</span>`, explain: "Nhường quyền: Heartbeat và các task khác vẫn chạy mượt mà!" }
+      ]
+    };
+
+    // =========================================================================
+    // STATE & SIMULATION ENGINE
+    // =========================================================================
+    let currentMode = 'async';
+    let isPlaying = false;
+    let currentStep = 0;
+    let simSpeed = 1.0;
+    let animTimer = null;
+    let simTimeMs = 0;
+
+    let config = {
+      stations: 8,
+      concurrency: 4,
+      timeout: 650,
+      failure: 10
+    };
+
+    let stationsData = [];
+    let activeTasks = [];
+    let completedStations = 0;
+
+    // Initialize Stations
+    function initStations() {
+      stationsData = [];
+      const baseDelays = [200, 350, 150, 500, 250, 400, 600, 300, 450, 220, 380, 550];
+      for (let i = 0; i < config.stations; i++) {
+        const sid = `S${String(i + 1).padStart(2, '0')}`;
+        stationsData.push({
+          id: sid,
+          name: `Trạm ${i + 1}`,
+          delay: baseDelays[i % baseDelays.length],
+          temp: (24 + (i * 2.3) % 15).toFixed(1),
+          humidity: (60 + (i * 4.1) % 35).toFixed(1),
+          aqi: Math.floor(40 + (i * 18.5) % 120),
+          state: 'IDLE', // IDLE, WAITING, RUNNING, DONE, TIMEOUT, ERROR
+          progress: 0,
+          elapsed: 0,
+          isAnomaly: (i === 4 || i === 7)
+        });
+      }
+    }
+
+    // Render Timeline Tracks
+    function renderTimeline() {
+      const container = document.getElementById('timeline-tracks');
+      container.innerHTML = '';
+      stationsData.forEach(s => {
+        const track = document.createElement('div');
+        track.className = 'station-track';
+        track.innerHTML = `
+          <div class="track-label">${s.id}</div>
+          <div class="track-bar-wrap">
+            <div class="track-bar" id="bar-${s.id}"></div>
+          </div>
+          <div class="track-status-text" id="status-${s.id}" style="color: var(--text-dim);">IDLE</div>
+        `;
+        container.appendChild(track);
+      });
+    }
+
+    // Render Code Display
+    function renderCode(mode) {
+      const area = document.getElementById('code-scroll-area');
+      const lines = CODE_SNIPPETS[mode] || CODE_SNIPPETS.async;
+      const fileTitles = {
+        async: 'async_mode.py',
+        thread: 'thread_mode.py',
+        sequential: 'sequential_mode.py',
+        process: 'process_mode.py',
+        hybrid: 'hybrid_mode.py',
+        fault_f7: 'resilience_f7_trap.py'
+      };
+      document.getElementById('code-file-title').innerText = fileTitles[mode];
+
+      area.innerHTML = '';
+      lines.forEach((l, idx) => {
+        const lineEl = document.createElement('div');
+        lineEl.className = 'code-line';
+        lineEl.id = `code-line-${idx}`;
+        lineEl.innerHTML = `
+          <span class="line-num">${l.num}</span>
+          <span class="line-content">${l.text}</span>
+        `;
+        area.appendChild(lineEl);
+      });
+    }
+
+    // Highlight Code Line
+    function highlightLine(lineIndex) {
+      document.querySelectorAll('.code-line').forEach(el => el.classList.remove('active-line'));
+      const target = document.getElementById(`code-line-${lineIndex}`);
+      if (target) {
+        target.classList.add('active-line');
+        target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        const lines = CODE_SNIPPETS[currentMode];
+        const lineNum = lines[lineIndex] ? lines[lineIndex].num : lineIndex + 1;
+        document.getElementById('code-active-line-num').innerText = `Dòng ${lineNum}`;
+      }
+    }
+
+    // Update Live Variables
+    function updateInspector(vars) {
+      if (vars.in_flight !== undefined) document.getElementById('var-inflight').innerText = vars.in_flight;
+      if (vars.sem !== undefined) document.getElementById('var-sem').innerText = vars.sem;
+      if (vars.loop !== undefined) document.getElementById('var-loop').innerText = vars.loop;
+      if (vars.station !== undefined) document.getElementById('var-station').innerText = vars.station;
+      if (vars.queue !== undefined) document.getElementById('var-queue').innerText = vars.queue;
+    }
+
+    // Append to Terminal Log
+    function logConsole(type, msg) {
+      const pane = document.getElementById('console-pane');
+      const timeStr = `[${String(Math.floor(simTimeMs / 1000)).padStart(2, '0')}:${String(Math.floor((simTimeMs % 1000) / 10)).padStart(2, '0')}]`;
+      const line = document.createElement('div');
+      line.className = 'console-line';
+      let tagClass = 'log-info';
+      let tagText = '[INFO]';
+      if (type === 'success') { tagClass = 'log-success'; tagText = '[DONE]'; }
+      if (type === 'warn') { tagClass = 'log-warn'; tagText = '[WARN]'; }
+      if (type === 'error') { tagClass = 'log-error'; tagText = '[ERR]'; }
+
+      line.innerHTML = `<span class="log-time">${timeStr}</span> <span class="${tagClass}">${tagText}</span> <span>${msg}</span>`;
+      pane.appendChild(line);
+      pane.scrollTop = pane.scrollHeight;
+    }
+
+    // =========================================================================
+    // VISUAL ARENA / GRAPH RENDERER
+    // =========================================================================
+    function drawArena(state) {
+      const svg = document.getElementById('sim-svg');
+      svg.innerHTML = '';
+      const w = svg.clientWidth || 550;
+      const h = svg.clientHeight || 380;
+
+      // Draw Center Processing Unit / Dispatcher
+      const centerX = w * 0.65;
+      const centerY = h * 0.5;
+
+      // Definitions (Glow Filters)
+      svg.innerHTML += `
+        <defs>
+          <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+          <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+          <filter id="glow-red" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+      `;
+
+      // 1. Draw Central Architecture Core
+      if (currentMode === 'async') {
+        // Draw Spinning Event Loop
+        const loopColor = (state && state.frozen) ? '#ef4444' : '#38bdf8';
+        const spinAnim = (state && state.frozen) ? '' : `<animateTransform attributeName="transform" type="rotate" from="0 ${centerX} ${centerY}" to="360 ${centerX} ${centerY}" dur="3s" repeatCount="indefinite"/>`;
+        svg.innerHTML += `
+          <g>
+            <circle cx="${centerX}" cy="${centerY}" r="75" fill="none" stroke="${loopColor}" stroke-width="4" stroke-dasharray="14 8" opacity="0.8">
+              ${spinAnim}
+            </circle>
+            <circle cx="${centerX}" cy="${centerY}" r="55" fill="#111827" stroke="${loopColor}" stroke-width="2" filter="url(#glow-cyan)"/>
+            <text x="${centerX}" y="${centerY - 8}" fill="${loopColor}" font-size="12" font-weight="800" text-anchor="middle" font-family="'Fira Code', monospace">EVENT LOOP</text>
+            <text x="${centerX}" y="${centerY + 12}" fill="#94a3b8" font-size="9" text-anchor="middle">Single Thread</text>
+            <text x="${centerX}" y="${centerY + 26}" fill="${(state && state.frozen) ? '#f87171' : '#34d399'}" font-size="9" font-weight="700" text-anchor="middle">
+              ${(state && state.frozen) ? 'FROZEN / BLOCKED' : 'COOPERATIVE'}
+            </text>
+          </g>
+        `;
+      } else if (currentMode === 'thread') {
+        // Draw Thread Pool Box
+        svg.innerHTML += `
+          <g>
+            <rect x="${centerX - 80}" y="${centerY - 80}" width="160" height="160" rx="12" fill="#111827" stroke="#38bdf8" stroke-width="2"/>
+            <text x="${centerX}" y="${centerY - 55}" fill="#38bdf8" font-size="11" font-weight="800" text-anchor="middle">THREAD POOL</text>
+            <!-- 4 Worker Slots -->
+            <rect x="${centerX - 65}" y="${centerY - 40}" width="60" height="30" rx="6" fill="#1e293b" stroke="#475569"/>
+            <text x="${centerX - 35}" y="${centerY - 22}" fill="#cbd5e1" font-size="8" text-anchor="middle">Thread-1</text>
+
+            <rect x="${centerX + 5}" y="${centerY - 40}" width="60" height="30" rx="6" fill="#1e293b" stroke="#475569"/>
+            <text x="${centerX + 35}" y="${centerY - 22}" fill="#cbd5e1" font-size="8" text-anchor="middle">Thread-2</text>
+
+            <rect x="${centerX - 65}" y="${centerY}" width="60" height="30" rx="6" fill="#1e293b" stroke="#475569"/>
+            <text x="${centerX - 35}" y="${centerY + 18}" fill="#cbd5e1" font-size="8" text-anchor="middle">Thread-3</text>
+
+            <rect x="${centerX + 5}" y="${centerY}" width="60" height="30" rx="6" fill="#1e293b" stroke="#475569"/>
+            <text x="${centerX + 35}" y="${centerY + 18}" fill="#cbd5e1" font-size="8" text-anchor="middle">Thread-4</text>
+
+            <text x="${centerX}" y="${centerY + 60}" fill="#94a3b8" font-size="8.5" text-anchor="middle">concurrent.futures</text>
+          </g>
+        `;
+      } else if (currentMode === 'sequential') {
+        // Draw Single Serial Gateway Bottleneck
+        svg.innerHTML += `
+          <g>
+            <rect x="${centerX - 70}" y="${centerY - 60}" width="140" height="120" rx="10" fill="#111827" stroke="#eab308" stroke-width="2"/>
+            <text x="${centerX}" y="${centerY - 30}" fill="#eab308" font-size="11" font-weight="800" text-anchor="middle">TUẦN TỰ (SERIAL)</text>
+            <rect x="${centerX - 50}" y="${centerY - 10}" width="100" height="35" rx="6" fill="#1e293b" stroke="#ca8a04"/>
+            <text x="${centerX}" y="${centerY + 12}" fill="#fef08a" font-size="9" font-weight="700" text-anchor="middle">1 Tác Vụ Duy Nhất</text>
+            <text x="${centerX}" y="${centerY + 45}" fill="#94a3b8" font-size="8" text-anchor="middle">CPU Idle khi I/O chờ</text>
+          </g>
+        `;
+      } else if (currentMode === 'process') {
+        // Draw Process Pool Cores
+        svg.innerHTML += `
+          <g>
+            <rect x="${centerX - 80}" y="${centerY - 80}" width="160" height="160" rx="12" fill="#111827" stroke="#c084fc" stroke-width="2"/>
+            <text x="${centerX}" y="${centerY - 55}" fill="#c084fc" font-size="11" font-weight="800" text-anchor="middle">CPU PROCESS POOL</text>
+            <rect x="${centerX - 65}" y="${centerY - 40}" width="60" height="30" rx="6" fill="#2e1065" stroke="#a855f7"/>
+            <text x="${centerX - 35}" y="${centerY - 22}" fill="#e9d5ff" font-size="8" text-anchor="middle">CPU Core 1</text>
+            <rect x="${centerX + 5}" y="${centerY - 40}" width="60" height="30" rx="6" fill="#2e1065" stroke="#a855f7"/>
+            <text x="${centerX + 35}" y="${centerY - 22}" fill="#e9d5ff" font-size="8" text-anchor="middle">CPU Core 2</text>
+            <rect x="${centerX - 65}" y="${centerY}" width="60" height="30" rx="6" fill="#2e1065" stroke="#a855f7"/>
+            <text x="${centerX - 35}" y="${centerY + 18}" fill="#e9d5ff" font-size="8" text-anchor="middle">CPU Core 3</text>
+            <rect x="${centerX + 5}" y="${centerY}" width="60" height="30" rx="6" fill="#2e1065" stroke="#a855f7"/>
+            <text x="${centerX + 35}" y="${centerY + 18}" fill="#e9d5ff" font-size="8" text-anchor="middle">CPU Core 4</text>
+            <text x="${centerX}" y="${centerY + 60}" fill="#a855f7" font-size="8.5" text-anchor="middle">No GIL Limitation</text>
+          </g>
+        `;
+      } else if (currentMode === 'hybrid') {
+        // Draw Hybrid: Async Loop + Bounded Queue + Process Cores
+        svg.innerHTML += `
+          <g>
+            <!-- Async I/O Loop -->
+            <circle cx="${centerX - 45}" cy="${centerY}" r="38" fill="#111827" stroke="#38bdf8" stroke-width="2"/>
+            <text x="${centerX - 45}" y="${centerY - 6}" fill="#38bdf8" font-size="8" font-weight="800" text-anchor="middle">ASYNC I/O</text>
+            <text x="${centerX - 45}" y="${centerY + 10}" fill="#94a3b8" font-size="7" text-anchor="middle">Event Loop</text>
+
+            <!-- Bounded Queue Arrow -->
+            <rect x="${centerX - 2}" y="${centerY - 12}" width="24" height="24" rx="4" fill="#1e293b" stroke="#f59e0b"/>
+            <text x="${centerX + 10}" y="${centerY + 4}" fill="#fbbf24" font-size="8" font-weight="700" text-anchor="middle">Q</text>
+
+            <!-- Process Pool -->
+            <rect x="${centerX + 30}" y="${centerY - 45}" width="65" height="90" rx="8" fill="#111827" stroke="#c084fc" stroke-width="2"/>
+            <text x="${centerX + 62}" y="${centerY - 25}" fill="#c084fc" font-size="8" font-weight="800" text-anchor="middle">CPU POOL</text>
+            <rect x="${centerX + 38}" y="${centerY - 15}" width="50" height="20" rx="4" fill="#2e1065" stroke="#a855f7"/>
+            <text x="${centerX + 63}" y="${centerY - 2}" fill="#e9d5ff" font-size="7" text-anchor="middle">Process 1</text>
+            <rect x="${centerX + 38}" y="${centerY + 12}" width="50" height="20" rx="4" fill="#2e1065" stroke="#a855f7"/>
+            <text x="${centerX + 63}" y="${centerY + 25}" fill="#e9d5ff" font-size="7" text-anchor="middle">Process 2</text>
+          </g>
+        `;
+      } else if (currentMode === 'fault_f7') {
+        // Draw Frozen Event Loop Alarm
+        svg.innerHTML += `
+          <g>
+            <circle cx="${centerX}" cy="${centerY}" r="75" fill="#450a0a" stroke="#ef4444" stroke-width="4" filter="url(#glow-red)"/>
+            <text x="${centerX}" y="${centerY - 15}" fill="#fca5a5" font-size="12" font-weight="800" text-anchor="middle">LOOP FROZEN!</text>
+            <text x="${centerX}" y="${centerY + 8}" fill="#f87171" font-size="9" text-anchor="middle">time.sleep(1.0)</text>
+            <text x="${centerX}" y="${centerY + 28}" fill="#fecaca" font-size="8" text-anchor="middle">Mọi tác vụ tê liệt</text>
+          </g>
+        `;
+      }
+
+      // 2. Draw Sensor Stations on the Left
+      const numS = stationsData.length;
+      const startY = 30;
+      const endY = h - 30;
+      const stepY = (endY - startY) / (numS > 1 ? (numS - 1) : 1);
+      const stationX = 55;
+
+      stationsData.forEach((s, i) => {
+        const sy = startY + i * stepY;
+
+        let nodeColor = '#64748b'; // default idle
+        let glow = '';
+        if (s.state === 'RUNNING') {
+          nodeColor = '#38bdf8';
+          glow = 'filter="url(#glow-cyan)"';
+        } else if (s.state === 'DONE') {
+          nodeColor = '#34d399';
+          glow = 'filter="url(#glow-green)"';
+        } else if (s.state === 'TIMEOUT' || s.state === 'ERROR') {
+          nodeColor = '#f87171';
+          glow = 'filter="url(#glow-red)"';
+        }
+
+        // Draw connecting wire to center
+        const wireColor = (s.state === 'RUNNING') ? '#38bdf8' : '#233148';
+        const wireWidth = (s.state === 'RUNNING') ? 2 : 1;
+        svg.innerHTML += `
+          <line x1="${stationX + 18}" y1="${sy}" x2="${centerX - 60}" y2="${centerY}" stroke="${wireColor}" stroke-width="${wireWidth}" stroke-dasharray="${s.state === 'RUNNING' ? '5 5' : 'none'}"/>
+        `;
+
+        // If running, draw moving packet
+        if (s.state === 'RUNNING') {
+          const tProgress = (s.progress % 100) / 100;
+          const px = (stationX + 18) + (centerX - 60 - (stationX + 18)) * tProgress;
+          const py = sy + (centerY - sy) * tProgress;
+          svg.innerHTML += `
+            <circle cx="${px}" cy="${py}" r="4" fill="#38bdf8" filter="url(#glow-cyan)"/>
+          `;
+        }
+
+        // Draw Station Node
+        svg.innerHTML += `
+          <g>
+            <circle cx="${stationX}" cy="${sy}" r="15" fill="#111827" stroke="${nodeColor}" stroke-width="2.5" ${glow}/>
+            <text x="${stationX}" y="${sy + 4}" fill="${nodeColor}" font-size="9" font-weight="700" text-anchor="middle" font-family="'Fira Code', monospace">${s.id}</text>
+            <!-- Label info -->
+            <text x="${stationX + 24}" y="${sy + 3}" fill="#cbd5e1" font-size="8.5" font-weight="500">${s.delay}ms</text>
+          </g>
+        `;
+      });
+    }
+
+    // =========================================================================
+    // EXECUTION FLOW CONTROLLER
+    // =========================================================================
+    function switchMode(mode) {
+      if (isPlaying) togglePlay();
+      currentMode = mode;
+
+      document.querySelectorAll('.mode-tab').forEach(b => {
+        b.classList.remove('active');
+        if (b.getAttribute('data-mode') === mode) b.classList.add('active');
+      });
+
+      renderCode(mode);
+      resetSimulation();
+      logConsole('info', `Đã chuyển sang chế độ: [${mode.toUpperCase()}]`);
+    }
+
+    function toggleConfigDrawer() {
+      const d = document.getElementById('config-drawer');
+      d.style.display = (d.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function updateConfig(key, val) {
+      config[key] = parseInt(val);
+      document.getElementById(`val-${key}`).innerText = val;
+      if (key === 'stations') {
+        initStations();
+        renderTimeline();
+      }
+      resetSimulation();
+    }
+
+    function openBenchmarkModal() {
+      document.getElementById('benchmark-modal').style.display = 'flex';
+    }
+
+    function closeBenchmarkModal() {
+      document.getElementById('benchmark-modal').style.display = 'none';
+    }
+
+    function changeSpeed(val) {
+      simSpeed = parseFloat(val);
+      logConsole('info', `Tốc độ mô phỏng đặt mức: ${simSpeed}x`);
+    }
+
+    function resetSimulation() {
+      if (animTimer) clearInterval(animTimer);
+      isPlaying = false;
+      document.getElementById('btn-play').innerText = '▶ Bắt đầu chạy';
+      currentStep = 0;
+      simTimeMs = 0;
+      completedStations = 0;
+
+      initStations();
+      renderTimeline();
+
+      document.getElementById('metric-time').innerText = '0.0';
+      document.getElementById('metric-throughput').innerText = '0.0';
+      document.getElementById('metric-inflight').innerText = `0 / ${config.concurrency}`;
+      document.getElementById('sim-status-text').innerText = 'SẴN SÀNG (READY)';
+      document.getElementById('sim-status-badge').style.borderColor = 'rgba(56, 189, 248, 0.3)';
+
+      highlightLine(0);
+      updateInspector({ in_flight: 0, sem: config.concurrency, loop: 'IDLE', station: 'None', queue: `0 / 5` });
+      drawArena({ frozen: false });
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      const btn = document.getElementById('btn-play');
+      if (isPlaying) {
+        btn.innerText = '⏸ Tạm dừng';
+        document.getElementById('sim-status-text').innerText = 'ĐANG CHẠY (RUNNING)';
+        logConsole('info', `Khởi động luồng thực thi [${currentMode.toUpperCase()}]...`);
+        animTimer = setInterval(runTick, 100 / simSpeed);
+      } else {
+        btn.innerText = '▶ Tiếp tục';
+        document.getElementById('sim-status-text').innerText = 'TẠM DỪNG (PAUSED)';
+        clearInterval(animTimer);
+      }
+    }
+
+    function stepNext() {
+      if (isPlaying) togglePlay();
+      runTick();
+    }
+
+    // Single Simulation Tick
+    function runTick() {
+      simTimeMs += 40 * simSpeed;
+      document.getElementById('metric-time').innerText = simTimeMs.toFixed(1);
+
+      if (currentMode === 'fault_f7') {
+        // Fault F7 Demo: Event loop freezes
+        highlightLine(5);
+        document.getElementById('sim-status-text').innerText = 'ĐÓNG BĂNG (FROZEN)';
+        updateInspector({ in_flight: 1, sem: 1, loop: 'BLOCKED BY time.sleep', station: 'S01' });
+        drawArena({ frozen: true });
+        if (simTimeMs > 2000) {
+          logConsole('error', 'CẢNH BÁO F7: time.sleep() chặn đứng Event Loop! Heartbeat tê liệt!');
+          togglePlay();
+        }
+        return;
+      }
+
+      // Concurrency Logic per Mode
+      let activeCount = 0;
+      let concurrencyLimit = (currentMode === 'sequential') ? 1 : config.concurrency;
+
+      // Select stations to run
+      stationsData.forEach((s, idx) => {
+        if (s.state === 'IDLE' && activeCount < concurrencyLimit) {
+          // Check sequential order constraint
+          if (currentMode === 'sequential') {
+            const prev = stationsData[idx - 1];
+            if (prev && prev.state !== 'DONE' && prev.state !== 'TIMEOUT') return;
+          }
+          s.state = 'RUNNING';
+          activeCount++;
+          logConsole('info', `Bắt đầu xử lý [${s.id}]: độ trễ mạng ${s.delay}ms`);
+        } else if (s.state === 'RUNNING') {
+          activeCount++;
+          s.elapsed += 40 * simSpeed;
+          s.progress = Math.min(100, (s.elapsed / s.delay) * 100);
+
+          // Update timeline bar
+          const bar = document.getElementById(`bar-${s.id}`);
+          const statusText = document.getElementById(`status-${s.id}`);
+          if (bar) {
+            bar.style.width = `${s.progress}%`;
+            bar.style.backgroundColor = (currentMode === 'process') ? 'var(--accent-purple)' : 'var(--accent-blue)';
+          }
+          if (statusText) statusText.innerText = `${s.progress.toFixed(0)}%`;
+
+          // Finish check
+          if (s.elapsed >= s.delay) {
+            // Check timeout
+            if (s.delay > config.timeout) {
+              s.state = 'TIMEOUT';
+              if (bar) bar.style.backgroundColor = 'var(--accent-red)';
+              if (statusText) { statusText.innerText = 'TIMEOUT'; statusText.style.color = 'var(--accent-red)'; }
+              logConsole('warn', `Trạm [${s.id}] TIMEOUT (vượt quá ${config.timeout}ms)!`);
+            } else {
+              s.state = 'DONE';
+              completedStations++;
+              if (bar) bar.style.backgroundColor = 'var(--accent-green)';
+              if (statusText) { statusText.innerText = 'DONE'; statusText.style.color = 'var(--accent-green)'; }
+              logConsole('success', `Trạm [${s.id}] hoàn tất! Temp: ${s.temp}°C, AQI: ${s.aqi}`);
+            }
+          }
+        }
+      });
+
+      // Update Metrics HUD
+      document.getElementById('metric-inflight').innerText = `${activeCount} / ${concurrencyLimit}`;
+      const throughput = (completedStations / (simTimeMs / 1000 || 1)).toFixed(2);
+      document.getElementById('metric-throughput').innerText = throughput;
+
+      // Dynamic Code Flow Line Pointer
+      if (currentMode === 'async') {
+        if (activeCount > 0) {
+          highlightLine(6); // line 7: await async_fetch_station
+          updateInspector({ in_flight: activeCount, sem: config.concurrency - activeCount, loop: 'AWAIT DISPATCH', station: `In-Flight: ${activeCount}` });
+        } else if (completedStations === stationsData.length) {
+          highlightLine(17); // line 18: results = await asyncio.gather
+          updateInspector({ in_flight: 0, sem: config.concurrency, loop: 'COMPLETED', station: 'Done' });
+        } else {
+          highlightLine(4); // line 5: async with sem
+        }
+      } else if (currentMode === 'thread') {
+        if (activeCount > 0) {
+          highlightLine(13); // as_completed
+          updateInspector({ in_flight: activeCount, sem: config.concurrency, loop: 'WORKER THREADS', station: `Running: ${activeCount}` });
+        } else if (completedStations === stationsData.length) {
+          highlightLine(16);
+          updateInspector({ in_flight: 0, sem: config.concurrency, loop: 'ALL DONE', station: 'Done' });
+        }
+      } else if (currentMode === 'sequential') {
+        highlightLine(8); // line 9: blocking_fetch_station
+        updateInspector({ in_flight: activeCount, sem: 1, loop: 'SERIAL BLOCKING', station: `S${String(completedStations + 1).padStart(2, '0')}` });
+      } else if (currentMode === 'process') {
+        highlightLine(9); // line 10: submit cpu anomaly
+        updateInspector({ in_flight: activeCount, sem: config.concurrency, loop: 'CPU FORK IPC', station: `Process cores: ${activeCount}` });
+      } else if (currentMode === 'hybrid') {
+        highlightLine(13); // line 14: run_in_executor
+        updateInspector({ in_flight: activeCount, sem: config.concurrency, loop: 'ASYNC + CPU', station: `Queue: ${activeCount}/5` });
+      }
+
+      drawArena({ frozen: false });
+
+      // Check all done
+      const allDone = stationsData.every(s => s.state === 'DONE' || s.state === 'TIMEOUT');
+      if (allDone) {
+        clearInterval(animTimer);
+        isPlaying = false;
+        document.getElementById('btn-play').innerText = '▶ Chạy lại';
+        document.getElementById('sim-status-text').innerText = 'HOÀN THÀNH (SUCCESS)';
+        logConsole('success', `🎉 TẤT CẢ TRẠM ĐÃ HOÀN TẤT TRONG ${simTimeMs.toFixed(1)}ms! Thông lượng: ${throughput} trạm/s.`);
+      }
+    }
+
+    // INIT ON LOAD
+    window.addEventListener('DOMContentLoaded', () => {
+      initStations();
+      renderTimeline();
+      renderCode('async');
+      drawArena();
+      highlightLine(0);
+    });
+
+    window.addEventListener('resize', () => {
+      drawArena();
+    });
+  </script>
+</body>
+</html>

@@ -137,6 +137,23 @@ Trạm cảm biến
 | `async` | Chồng thời gian chờ I/O bằng coroutine và Task |
 | `hybrid` | `asyncio` cho I/O kết hợp process pool cho CPU |
 
+### 🎬 Trực quan hóa tương tác (Interactive Split-Screen Visualizer)
+
+Mã nguồn và giao diện mô phỏng được tổ chức hoàn chỉnh tại thư mục [`demo/`](demo/README.md):
+- **1 bên là Video/Mô phỏng trực quan tương tác:** Thể hiện trạm cảm biến, luồng gói tin, Event Loop quay tròn, Thread Worker pool, CPU Cores và Bounded Queue (Backpressure).
+- **1 bên là Luồng Code thực thi thời gian thực:** Highlight sáng từng dòng code đang chạy (`► RUNNING`), bảng soi biến (Variable Inspector) và console log.
+
+```bash
+# Cách 1: Mở giao diện trực quan hóa ngay trên trình duyệt
+python demo/serve_visualizer.py   # hoặc click đúp mở demo/index.html
+
+# Cách 2: Chạy benchmark đối đầu cả 5 chế độ trên terminal
+python demo/run_demo.py --benchmark
+
+# Cách 3: Thử nghiệm bẫy blocking sleep (Fault F7) & Race condition (Fault F8)
+python demo/run_demo.py --fault f7
+```
+
 Demo phải dùng cùng input/seed, kiểm tra output trước benchmark, chạy offline và lưu raw result. Kết luận hiệu năng phải gắn với cấu hình, workload và giới hạn phép đo.
 
 ## 8. Milestone và trạng thái

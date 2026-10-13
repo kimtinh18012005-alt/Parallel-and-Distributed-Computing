@@ -1,0 +1,6 @@
+run_id,mode,elapsed_ms,throughput,success,timeout,failed,digest
+seq_1791874951411,sequential,2891.15,2.77,8,0,0,fc7f3f218525024d
+thread_1791874952470,thread,968.34,8.26,8,0,0,fc7f3f218525024d
+async_1791874953445,async,975.95,8.2,8,0,0,fc7f3f218525024d
+process_1791874956973,process,3527.87,2.27,8,0,0,fc7f3f218525024d
+hybrid_1791874958055,hybrid,1081.73,7.4,8,0,0,fc7f3f218525024d

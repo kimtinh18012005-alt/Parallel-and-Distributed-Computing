@@ -1,0 +1,178 @@
+{
+  "run_id": "hybrid_1791874958055",
+  "mode": "hybrid",
+  "python_version": "3.11.9",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "parameters": {
+    "num_stations": 8,
+    "concurrency_limit": 4,
+    "cpu_workers": 4,
+    "queue_maxsize": 5,
+    "timeout_ms": null,
+    "seed": 42
+  },
+  "seed": 42,
+  "started_at": "2026-10-13T07:02:36.973838+00:00",
+  "elapsed_ms": 1081.73,
+  "success_count": 8,
+  "timeout_count": 0,
+  "failure_count": 0,
+  "cancelled_count": 0,
+  "max_in_flight": 4,
+  "throughput_items_per_second": 7.4,
+  "result_digest": "fc7f3f218525024d",
+  "station_results": [
+    {
+      "station_id": "STATION_03",
+      "status": "success",
+      "attempts": 1,
+      "elapsed_ms": 146.63,
+      "record": {
+        "station_id": "STATION_03",
+        "sequence": 1,
+        "observed_at": "2026-10-13T07:02:37.115446+00:00",
+        "temperature_c": 22.1,
+        "humidity_percent": 82.7,
+        "air_quality_index": 47,
+        "payload_checksum": "de6bf7273a46"
+      },
+      "anomaly_score": 96.6485,
+      "is_anomaly": true,
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "station_id": "STATION_01",
+      "status": "success",
+      "attempts": 1,
+      "elapsed_ms": 201.64,
+      "record": {
+        "station_id": "STATION_01",
+        "sequence": 1,
+        "observed_at": "2026-10-13T07:02:37.162654+00:00",
+        "temperature_c": 22.5,
+        "humidity_percent": 45.2,
+        "air_quality_index": 30,
+        "payload_checksum": "e0bae952981d"
+      },
+      "anomaly_score": 34.4637,
+      "is_anomaly": false,
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "station_id": "STATION_02",
+      "status": "success",
+      "attempts": 1,
+      "elapsed_ms": 351.86,
+      "record": {
+        "station_id": "STATION_02",
+        "sequence": 1,
+        "observed_at": "2026-10-13T07:02:37.319333+00:00",
+        "temperature_c": 27.5,
+        "humidity_percent": 78.2,
+        "air_quality_index": 43,
+        "payload_checksum": "0b2805c73c47"
+      },
+      "anomaly_score": 95.1624,
+      "is_anomaly": true,
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "station_id": "STATION_05",
+      "status": "success",
+      "attempts": 1,
+      "elapsed_ms": 299.7,
+      "record": {
+        "station_id": "STATION_05",
+        "sequence": 1,
+        "observed_at": "2026-10-13T07:02:37.431238+00:00",
+        "temperature_c": 27.9,
+        "humidity_percent": 50.7,
+        "air_quality_index": 120,
+        "payload_checksum": "afebb279bc05"
+      },
+      "anomaly_score": 51.9654,
+      "is_anomaly": false,
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "station_id": "STATION_04",
+      "status": "success",
+      "attempts": 1,
+      "elapsed_ms": 547.52,
+      "record": {
+        "station_id": "STATION_04",
+        "sequence": 1,
+        "observed_at": "2026-10-13T07:02:37.513124+00:00",
+        "temperature_c": 31.1,
+        "humidity_percent": 46.1,
+        "air_quality_index": 216,
+        "payload_checksum": "a2d316d5135b"
+      },
+      "anomaly_score": 58.4801,
+      "is_anomaly": true,
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "station_id": "STATION_06",
+      "status": "success",
+      "attempts": 1,
+      "elapsed_ms": 453.05,
+      "record": {
+        "station_id": "STATION_06",
+        "sequence": 1,
+        "observed_at": "2026-10-13T07:02:37.627318+00:00",
+        "temperature_c": 40.9,
+        "humidity_percent": 74.5,
+        "air_quality_index": 94,
+        "payload_checksum": "5a38ebda8f22"
+      },
+      "anomaly_score": 68.9926,
+      "is_anomaly": false,
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "station_id": "STATION_08",
+      "status": "success",
+      "attempts": 1,
+      "elapsed_ms": 323.0,
+      "record": {
+        "station_id": "STATION_08",
+        "sequence": 1,
+        "observed_at": "2026-10-13T07:02:37.762448+00:00",
+        "temperature_c": 28.9,
+        "humidity_percent": 83.3,
+        "air_quality_index": 218,
+        "payload_checksum": "3dfdba1a24cb"
+      },
+      "anomaly_score": 98.1905,
+      "is_anomaly": true,
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "station_id": "STATION_07",
+      "status": "success",
+      "attempts": 1,
+      "elapsed_ms": 633.03,
+      "record": {
+        "station_id": "STATION_07",
+        "sequence": 1,
+        "observed_at": "2026-10-13T07:02:37.968100+00:00",
+        "temperature_c": 25.6,
+        "humidity_percent": 60.5,
+        "air_quality_index": 110,
+        "payload_checksum": "3e3579229ecb"
+      },
+      "anomaly_score": 48.2808,
+      "is_anomaly": false,
+      "error_type": null,
+      "error_message": null
+    }
+  ]
+}
